@@ -5,6 +5,8 @@
       <map>
         <entry key="../../../../../layout/custom_preview.xml" value="0.39375" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2554347826086957" />
+        <entry key="app/src/main/res/layout/activity_medication_edit.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_weekdays.xml" value="0.2817028985507246" />
       </map>
     </option>
   </component>
