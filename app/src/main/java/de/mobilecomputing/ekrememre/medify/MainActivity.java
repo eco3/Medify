@@ -14,7 +14,9 @@ import android.view.View;
 import de.mobilecomputing.ekrememre.medify.database.MedicationDatabase;
 
 public class MainActivity extends AppCompatActivity {
-    private static final int ADD_MEDICATION_REQUEST_CODE = 0;
+    public static final String REQUEST_CODE_EXTRA = "REQUEST_CODE";
+    public static final int ADD_MEDICATION_REQUEST_CODE = 0;
+    public static final int EDIT_MEDICATION_REQUEST_CODE = 1;
 
     public MedicationDatabase medicationDatabase;
 
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickAddMedication(View view) {
         Intent intent = new Intent(this, MedicationEditActivity.class);
+        intent.putExtra(REQUEST_CODE_EXTRA, ADD_MEDICATION_REQUEST_CODE);
 
         //noinspection deprecation
         startActivityForResult(intent, ADD_MEDICATION_REQUEST_CODE);

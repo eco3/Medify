@@ -4,6 +4,9 @@
     <string name="hint_name">Medication name</string>
     <string name="hint_description">Description</string>
 
+    <string name="save">Save</string>
+    <string name="edit">Edit</string>
+
     <string name="weekday_monday">Mon</string>
     <string name="weekday_tuesday">Tue</string>
     <string name="weekday_wednesday">Wed</string>
