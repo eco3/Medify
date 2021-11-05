@@ -50,4 +50,12 @@ public class Medication {
     public String getDescription() {
         return description;
     }
+
+    public ArrayList<Integer> getWeekdays() {
+        return weekdays;
+    }
+
+    public Calendar getCalendar() {
+        return calendar;
+    }
 }
