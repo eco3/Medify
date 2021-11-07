@@ -15,28 +15,28 @@ public class Medication {
     private final String name;
     private final String description;
     private final ArrayList<Integer> weekdays;
-    private final Calendar calendar;
+    private final Calendar timestamp;
 
     public Medication(long id, String name, String description,
-                      ArrayList<Integer> weekdays, Calendar calendar) {
+                      ArrayList<Integer> weekdays, Calendar timestamp) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.weekdays = weekdays;
-        this.calendar = calendar;
+        this.timestamp = timestamp;
     }
 
-    public ArrayList<Calendar> getCalendars() {
-        ArrayList<Calendar> calendars = new ArrayList<>();
+    public ArrayList<Calendar> getTimestamps() {
+        ArrayList<Calendar> timestamps = new ArrayList<>();
 
         for(Integer weekday : weekdays) {
-            Calendar tempCalendar = (Calendar) calendar.clone();
-            tempCalendar.set(Calendar.DAY_OF_WEEK, weekday);
+            Calendar tempTimestamp = (Calendar) timestamp.clone();
+            tempTimestamp.set(Calendar.DAY_OF_WEEK, weekday);
 
-            calendars.add(tempCalendar);
+            timestamps.add(tempTimestamp);
         }
 
-        return calendars;
+        return timestamps;
     }
 
     public long getId() {
@@ -55,7 +55,7 @@ public class Medication {
         return weekdays;
     }
 
-    public Calendar getCalendar() {
-        return calendar;
+    public Calendar getTimestamp() {
+        return timestamp;
     }
 }
