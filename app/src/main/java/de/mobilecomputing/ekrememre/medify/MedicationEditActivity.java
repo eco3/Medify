@@ -2,6 +2,7 @@ package de.mobilecomputing.ekrememre.medify;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.icu.util.Calendar;
@@ -12,6 +13,7 @@ public class MedicationEditActivity extends AppCompatActivity {
 
     public EditText etimeEditText;
 
+    @SuppressLint("DefaultLocale")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,18 +31,18 @@ public class MedicationEditActivity extends AppCompatActivity {
         if (requestCode == MainActivity.ADD_MEDICATION_REQUEST_CODE) {
             int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
             int currentMinute = Calendar.getInstance().get(Calendar.MINUTE);
-            etimeEditText.setText(currentHour + ":" + currentMinute);
+
+            etimeEditText.setText(String.format("%02d:%02d", currentHour, currentMinute));
         }
 
         etimeEditText.setOnClickListener(v -> {
-            Calendar mcurrentTime = Calendar.getInstance();
-            int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-            int minute = mcurrentTime.get(Calendar.MINUTE);
+            int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+            int currentMinute = Calendar.getInstance().get(Calendar.MINUTE);
 
             TimePickerDialog mTimePicker;
-            mTimePicker = new TimePickerDialog(this, (timePicker, selectedHour, selectedMinute) -> {
-                etimeEditText.setText(selectedHour + ":" + selectedMinute);
-            }, hour, minute, true);
+            mTimePicker = new TimePickerDialog(this,
+                    (timePicker, selectedHour, selectedMinute) -> etimeEditText.setText(String.format("%02d:%02d", selectedHour, selectedMinute)),
+                    currentHour, currentMinute, true);
 
             mTimePicker.show();
         });
