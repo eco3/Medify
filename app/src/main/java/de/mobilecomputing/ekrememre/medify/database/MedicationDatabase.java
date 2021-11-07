@@ -7,7 +7,7 @@ import androidx.room.TypeConverters;
 import de.mobilecomputing.ekrememre.medify.entities.Converters;
 import de.mobilecomputing.ekrememre.medify.entities.Medication;
 
-@Database(entities = {Medication.class}, version = 1)
+@Database(entities = {Medication.class}, version = 3)
 @TypeConverters({Converters.class})
 public abstract class MedicationDatabase extends RoomDatabase {
     public abstract MedicationDao medicationDao();

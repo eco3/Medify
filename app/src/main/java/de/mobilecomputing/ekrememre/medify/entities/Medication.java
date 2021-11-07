@@ -9,34 +9,31 @@ import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
 
-@Entity
+@Entity(tableName = "medication")
 public class Medication implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     public long id;
 
     private final String name;
     private final String description;
-    private final ArrayList<Integer> weekdays;
-    private final Calendar timestamp;
+    private final ArrayList<Long> timestamps;
 
-    public Medication(String name, String description, ArrayList<Integer> weekdays, Calendar timestamp) {
+    public Medication(String name, String description, ArrayList<Long> timestamps) {
         this.name = name;
         this.description = description;
-        this.weekdays = weekdays;
-        this.timestamp = timestamp;
+        this.timestamps = timestamps;
     }
 
-    public ArrayList<Calendar> getTimestamps() {
-        ArrayList<Calendar> timestamps = new ArrayList<>();
+    public ArrayList<Calendar> getCalendarTimestamps() {
+        ArrayList<Calendar> calendarTimestamps = new ArrayList<>();
 
-        for (Integer weekday : weekdays) {
-            Calendar tempTimestamp = (Calendar) timestamp.clone();
-            tempTimestamp.set(Calendar.DAY_OF_WEEK, weekday);
-
-            timestamps.add(tempTimestamp);
+        for (Long timestamp : timestamps) {
+            Calendar calendarTimestamp = Calendar.getInstance();
+            calendarTimestamp.setTimeInMillis(timestamp);
+            calendarTimestamps.add(calendarTimestamp);
         }
 
-        return timestamps;
+        return calendarTimestamps;
     }
 
     public long getId() {
@@ -51,20 +48,15 @@ public class Medication implements Parcelable {
         return description;
     }
 
-    public ArrayList<Integer> getWeekdays() {
-        return weekdays;
-    }
-
-    public Calendar getTimestamp() {
-        return timestamp;
+    public ArrayList<Long> getTimestamps() {
+        return timestamps;
     }
 
     private Medication(Parcel in) {
         id = in.readLong();
         name = in.readString();
         description = in.readString();
-        weekdays = in.readArrayList(null);
-        timestamp = (Calendar) in.readSerializable();
+        timestamps = in.readArrayList(null);
     }
 
     @Override
@@ -77,8 +69,7 @@ public class Medication implements Parcelable {
         out.writeLong(id);
         out.writeString(name);
         out.writeString(description);
-        out.writeList(weekdays);
-        out.writeSerializable(timestamp);
+        out.writeList(timestamps);
     }
 
     public static final Parcelable.Creator<Medication> CREATOR

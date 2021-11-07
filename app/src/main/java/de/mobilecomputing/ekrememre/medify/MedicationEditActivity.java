@@ -7,15 +7,18 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import de.mobilecomputing.ekrememre.medify.entities.Medication;
 
 public class MedicationEditActivity extends AppCompatActivity {
+    private static final String TAG = "MedicationEditActivity";
     public static final String MEDICATION_OBJECT = "MEDICATION_OBJECT";
 
     public EditText mnameEditText;
@@ -79,12 +82,18 @@ public class MedicationEditActivity extends AppCompatActivity {
         String name = mnameEditText.getText().toString();
         String description = mdescriptionEditText.getText().toString();
         ArrayList<Integer> weekdays = getWeekdays();
-        Calendar timestamp = Calendar.getInstance();
+        ArrayList<Long> timestamps = new ArrayList<>();
 
-        timestamp.set(Calendar.HOUR_OF_DAY, Integer.parseInt(mtimeEditText.getText().toString().substring(0,2)));
-        timestamp.set(Calendar.MINUTE, Integer.parseInt(mtimeEditText.getText().toString().substring(3,5)));
+        for (Integer weekday : weekdays) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(mtimeEditText.getText().toString().substring(0,2)));
+            calendar.set(Calendar.MINUTE, Integer.parseInt(mtimeEditText.getText().toString().substring(3,5)));
+            calendar.set(Calendar.DAY_OF_WEEK, weekday);
 
-        Medication medication = new Medication(name, description, weekdays, timestamp);
+            timestamps.add(calendar.getTimeInMillis());
+        }
+
+        Medication medication = new Medication(name, description, timestamps);
 
         Intent intent = new Intent();
         intent.putExtra(MEDICATION_OBJECT, medication);
