@@ -3,6 +3,7 @@
 
     <string name="hint_name">Medication name</string>
     <string name="hint_description">Description</string>
+    <string name="alerts">Alerts</string>
 
     <string name="save">Save</string>
     <string name="edit">Edit</string>

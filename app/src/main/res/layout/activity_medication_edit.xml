@@ -44,97 +44,25 @@
                 android:hint="@string/hint_description" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/alertLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:text="@string/alerts"
+            android:textSize="20sp" />
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="@dimen/spacer" />
-
-            <EditText
-                android:id="@+id/time_editText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="2"
-                android:inputType="time"
-                android:minHeight="48dp"
-                android:text="00:00"
-                android:focusable="false"
-                android:textAlignment="center"
-                android:textSize="34sp"
-                tools:ignore="SpeakableTextPresentCheck" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="@dimen/spacer" />
-        </LinearLayout>
-
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/alert_recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/monday_checkBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/weekday_monday" />
-
-            <CheckBox
-                android:id="@+id/tuesday_checkBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/weekday_tuesday" />
-
-            <CheckBox
-                android:id="@+id/wednesday_checkBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/weekday_wednesday" />
-
-            <CheckBox
-                android:id="@+id/thursday_checkBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/weekday_thursday" />
-
-            <CheckBox
-                android:id="@+id/friday_checkBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/weekday_friday" />
-
-            <CheckBox
-                android:id="@+id/saturday_checkBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/weekday_saturday" />
-
-            <CheckBox
-                android:id="@+id/sunday_checkBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/weekday_sunday" />
-        </LinearLayout>
+            android:layout_height="match_parent" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/save_medication_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onSaveMedication"
             android:text="@string/save" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,8 @@
 package de.mobilecomputing.ekrememre.medify;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
@@ -14,8 +16,11 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import de.mobilecomputing.ekrememre.medify.entities.AlertTimestamp;
 import de.mobilecomputing.ekrememre.medify.entities.Medication;
+import de.mobilecomputing.ekrememre.medify.recyclerviews.AlertsViewAdapter;
 
 public class MedicationEditActivity extends AppCompatActivity {
     private static final String TAG = "MedicationEditActivity";
@@ -33,7 +38,9 @@ public class MedicationEditActivity extends AppCompatActivity {
     public CheckBox msaturdayCheckbox;
     public CheckBox msundayCheckbox;
 
-    @SuppressLint("DefaultLocale")
+    public RecyclerView malertRecyclerview;
+    public AlertsViewAdapter malertsViewAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,34 +55,62 @@ public class MedicationEditActivity extends AppCompatActivity {
 
         mnameEditText = (EditText) findViewById(R.id.name_editText);
         mdescriptionEditText = (EditText) findViewById(R.id.description_editText);
-        mtimeEditText = (EditText) findViewById(R.id.time_editText);
+//        mtimeEditText = (EditText) findViewById(R.id.time_editText);
+//
+//        mmondayCheckbox = (CheckBox) findViewById(R.id.monday_checkBox);
+//        mtuesdasCheckbox = (CheckBox) findViewById(R.id.tuesday_checkBox);
+//        mwednesdayCheckbox = (CheckBox) findViewById(R.id.wednesday_checkBox);
+//        mthursdayCheckbox = (CheckBox) findViewById(R.id.thursday_checkBox);
+//        mfridayCheckbox = (CheckBox) findViewById(R.id.friday_checkBox);
+//        msaturdayCheckbox = (CheckBox) findViewById(R.id.saturday_checkBox);
+//        msundayCheckbox = (CheckBox) findViewById(R.id.sunday_checkBox);
+//
+//        if (requestCode == MainActivity.ADD_MEDICATION_REQUEST_CODE) {
+//            int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+//            int currentMinute = Calendar.getInstance().get(Calendar.MINUTE);
+//
+//            mtimeEditText.setText(String.format("%02d:%02d", currentHour, currentMinute));
+//        }
+//
+//        mtimeEditText.setOnClickListener(v -> {
+//            int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+//            int currentMinute = Calendar.getInstance().get(Calendar.MINUTE);
+//
+//            TimePickerDialog mTimePicker;
+//            mTimePicker = new TimePickerDialog(this,
+//                    (timePicker, selectedHour, selectedMinute) -> mtimeEditText.setText(String.format("%02d:%02d", selectedHour, selectedMinute)),
+//                    currentHour, currentMinute, true);
+//
+//            mTimePicker.show();
+//        });
 
-        mmondayCheckbox = (CheckBox) findViewById(R.id.monday_checkBox);
-        mtuesdasCheckbox = (CheckBox) findViewById(R.id.tuesday_checkBox);
-        mwednesdayCheckbox = (CheckBox) findViewById(R.id.wednesday_checkBox);
-        mthursdayCheckbox = (CheckBox) findViewById(R.id.thursday_checkBox);
-        mfridayCheckbox = (CheckBox) findViewById(R.id.friday_checkBox);
-        msaturdayCheckbox = (CheckBox) findViewById(R.id.saturday_checkBox);
-        msundayCheckbox = (CheckBox) findViewById(R.id.sunday_checkBox);
+        List<AlertTimestamp> alertTimestamps = new ArrayList<>();
+        alertTimestamps.add(new AlertTimestamp());
+        alertTimestamps.add(new AlertTimestamp());
+        alertTimestamps.add(new AlertTimestamp());
+        alertTimestamps.add(new AlertTimestamp());
+        alertTimestamps.add(new AlertTimestamp());
+        alertTimestamps.add(new AlertTimestamp());
+        alertTimestamps.add(new AlertTimestamp());
+        alertTimestamps.add(new AlertTimestamp());
+        alertTimestamps.add(new AlertTimestamp());
+        alertTimestamps.add(new AlertTimestamp());
+        alertTimestamps.add(new AlertTimestamp());
+        alertTimestamps.add(new AlertTimestamp());
+        alertTimestamps.add(new AlertTimestamp());
+        alertTimestamps.add(new AlertTimestamp());
+        alertTimestamps.add(new AlertTimestamp());
+        alertTimestamps.add(new AlertTimestamp());
+        alertTimestamps.add(new AlertTimestamp());
+        alertTimestamps.add(new AlertTimestamp());
+        alertTimestamps.add(new AlertTimestamp());
 
-        if (requestCode == MainActivity.ADD_MEDICATION_REQUEST_CODE) {
-            int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-            int currentMinute = Calendar.getInstance().get(Calendar.MINUTE);
+        malertsViewAdapter = new AlertsViewAdapter(alertTimestamps);
 
-            mtimeEditText.setText(String.format("%02d:%02d", currentHour, currentMinute));
-        }
-
-        mtimeEditText.setOnClickListener(v -> {
-            int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-            int currentMinute = Calendar.getInstance().get(Calendar.MINUTE);
-
-            TimePickerDialog mTimePicker;
-            mTimePicker = new TimePickerDialog(this,
-                    (timePicker, selectedHour, selectedMinute) -> mtimeEditText.setText(String.format("%02d:%02d", selectedHour, selectedMinute)),
-                    currentHour, currentMinute, true);
-
-            mTimePicker.show();
-        });
+        malertRecyclerview = (RecyclerView) findViewById(R.id.alert_recyclerview);
+//        malertRecyclerview.setHasFixedSize(true);
+        malertRecyclerview.setLayoutManager(new LinearLayoutManager(this));
+        malertRecyclerview.setAdapter(malertsViewAdapter);
     }
 
     public void onSaveMedication(View view) {
