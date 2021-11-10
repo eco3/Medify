@@ -1,43 +1,26 @@
 package de.mobilecomputing.ekrememre.medify.entities;
 
-import android.icu.util.Calendar;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.ArrayList;
-
 @Entity(tableName = "medication")
 public class Medication implements Parcelable {
     @PrimaryKey(autoGenerate = true)
-    public long id;
+    public long medicationId;
 
     private final String name;
     private final String description;
-    private final ArrayList<Long> timestamps;
 
-    public Medication(String name, String description, ArrayList<Long> timestamps) {
+    public Medication(String name, String description) {
         this.name = name;
         this.description = description;
-        this.timestamps = timestamps;
     }
 
-    public ArrayList<Calendar> getCalendarTimestamps() {
-        ArrayList<Calendar> calendarTimestamps = new ArrayList<>();
-
-        for (Long timestamp : timestamps) {
-            Calendar calendarTimestamp = Calendar.getInstance();
-            calendarTimestamp.setTimeInMillis(timestamp);
-            calendarTimestamps.add(calendarTimestamp);
-        }
-
-        return calendarTimestamps;
-    }
-
-    public long getId() {
-        return id;
+    public long getMedicationId() {
+        return medicationId;
     }
 
     public String getName() {
@@ -48,15 +31,10 @@ public class Medication implements Parcelable {
         return description;
     }
 
-    public ArrayList<Long> getTimestamps() {
-        return timestamps;
-    }
-
     private Medication(Parcel in) {
-        id = in.readLong();
+        medicationId = in.readLong();
         name = in.readString();
         description = in.readString();
-        timestamps = in.readArrayList(null);
     }
 
     @Override
@@ -66,10 +44,9 @@ public class Medication implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
-        out.writeLong(id);
+        out.writeLong(medicationId);
         out.writeString(name);
         out.writeString(description);
-        out.writeList(timestamps);
     }
 
     public static final Parcelable.Creator<Medication> CREATOR

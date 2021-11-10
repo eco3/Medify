@@ -93,13 +93,13 @@ public class MedicationEditActivity extends AppCompatActivity {
             timestamps.add(calendar.getTimeInMillis());
         }
 
-        Medication medication = new Medication(name, description, timestamps);
+//        Medication medication = new Medication(name, description, timestamps);
 
-        Intent intent = new Intent();
-        intent.putExtra(MEDICATION_OBJECT, medication);
-
-        setResult(RESULT_OK, intent);
-        finish();
+//        Intent intent = new Intent();
+//        intent.putExtra(MEDICATION_OBJECT, medication);
+//
+//        setResult(RESULT_OK, intent);
+//        finish();
     }
 
 
