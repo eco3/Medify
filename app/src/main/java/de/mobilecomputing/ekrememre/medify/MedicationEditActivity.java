@@ -1,6 +1,5 @@
 package de.mobilecomputing.ekrememre.medify;
 
-import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -8,21 +7,14 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
-import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.icu.util.Calendar;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TimePicker;
 
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import de.mobilecomputing.ekrememre.medify.entities.AlertTimestamp;
@@ -33,12 +25,11 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
     private static final String TAG = "MedicationEditActivity";
     public static final String MEDICATION_OBJECT = "MEDICATION_OBJECT";
 
-    public EditText mnameEditText;
-    public EditText mdescriptionEditText;
-    public EditText mtimeEditText;
+    private EditText mnameEditText;
+    private EditText mdescriptionEditText;
 
-    public RecyclerView malertRecyclerview;
-    public AlertsViewAdapter malertsViewAdapter;
+    private RecyclerView malertRecyclerview;
+    private AlertsViewAdapter malertsViewAdapter;
 
     private List<AlertTimestamp> alertTimestamps;
 
@@ -83,10 +74,11 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
                 int position = viewHolder.getAdapterPosition();
                 AlertTimestamp deletedTimestamp = alertTimestamps.get(position);
 
-                alertTimestamps.remove(viewHolder.getAdapterPosition());
-                malertsViewAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                alertTimestamps.remove(position);
+                malertsViewAdapter.notifyItemRemoved(position);
 
-                Snackbar.make(malertRecyclerview, deletedTimestamp.toString(), Snackbar.LENGTH_LONG).setAction("Undo", v -> {
+                Snackbar.make(malertRecyclerview, R.string.alert_deletion_message, Snackbar.LENGTH_LONG)
+                .setAction("Undo", v -> {
                     alertTimestamps.add(position, deletedTimestamp);
                     malertsViewAdapter.notifyItemInserted(position);
                 }).show();
@@ -101,24 +93,11 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
 
     @Override
     public void onDialogPositiveClick(Integer hour, Integer minute, List<Integer> weekdays) {
-        Log.d(TAG, "onDialogPositiveClick: " + hour + ":" + minute);
+        alertTimestamps.add(new AlertTimestamp(hour, minute, weekdays));
+        malertsViewAdapter.notifyItemInserted(alertTimestamps.size());
     }
 
     public void onSaveMedication(View view) {
-        String name = mnameEditText.getText().toString();
-        String description = mdescriptionEditText.getText().toString();
-        ArrayList<Integer> weekdays = new ArrayList<>();
-        ArrayList<Long> timestamps = new ArrayList<>();
-
-        for (Integer weekday : weekdays) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(mtimeEditText.getText().toString().substring(0,2)));
-            calendar.set(Calendar.MINUTE, Integer.parseInt(mtimeEditText.getText().toString().substring(3,5)));
-            calendar.set(Calendar.DAY_OF_WEEK, weekday);
-
-            timestamps.add(calendar.getTimeInMillis());
-        }
-
 //        Medication medication = new Medication(name, description, timestamps);
 
 //        Intent intent = new Intent();

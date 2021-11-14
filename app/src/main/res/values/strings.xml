@@ -16,5 +16,9 @@
     <string name="weekday_friday">Fri</string>
     <string name="weekday_saturday">Sat</string>
     <string name="weekday_sunday">Sun</string>
+
     <string name="add_alert">Add Alert</string>
+
+    <string name="weekday_empty_warning">A weekday must be chosen.</string>
+    <string name="alert_deletion_message">Alert was deleted.</string>
 </resources>

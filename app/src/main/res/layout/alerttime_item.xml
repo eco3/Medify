@@ -12,7 +12,7 @@
         android:layout_gravity="center">
 
         <TextView
-            android:id="@+id/alerttimeLabel"
+            android:id="@+id/alerttime_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="8dp"
-            android:layout_toEndOf="@id/alerttimeLabel"
+            android:layout_toEndOf="@id/alerttime_label"
             android:divider="@drawable/spacing"
             android:orientation="horizontal"
             android:showDividers="middle">

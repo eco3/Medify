@@ -72,13 +72,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <Button
-            android:id="@+id/save_medication_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onSaveMedication"
-            android:text="@string/save" />
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

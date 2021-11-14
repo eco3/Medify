@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.icu.util.Calendar;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -13,10 +14,14 @@ import android.widget.TimePicker;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddAlertDialogFragment extends DialogFragment {
+    private static final String TAG = "AddAlertDialogFragment";
+
     public interface AddAlertDialogListener {
         void onDialogPositiveClick(Integer hour, Integer minute, List<Integer> weekdays);
     }
@@ -48,10 +53,19 @@ public class AddAlertDialogFragment extends DialogFragment {
         msundayCheckbox = (CheckBox) view.findViewById(R.id.sunday_checkBox);
 
         mtimePicker.setIs24HourView(true);
+        setWeekdayCheckbox();
 
         builder.setView(view)
-        .setPositiveButton(R.string.save, (dialog, id) -> listener.onDialogPositiveClick(mtimePicker.getHour(), mtimePicker.getMinute(), getWeekdays()))
-        .setNegativeButton(R.string.cancel, (dialog, id) -> dialog.dismiss());
+            .setPositiveButton(R.string.save, (dialog, id) -> {
+                if (getWeekdays().isEmpty()) {
+                    // TODO: create feedback, if no weekdays were checked.
+                    // Snackbar.make(view, R.string.weekday_empty_warning, Snackbar.LENGTH_LONG).show();
+                } else {
+                    listener.onDialogPositiveClick(mtimePicker.getHour(), mtimePicker.getMinute(), getWeekdays());
+                }
+            })
+            .setNegativeButton(R.string.cancel, (dialog, id) -> dialog.dismiss());
+
         return builder.create();
     }
 
@@ -66,7 +80,7 @@ public class AddAlertDialogFragment extends DialogFragment {
         }
     }
 
-    private ArrayList<Integer> getWeekdays(){
+    private List<Integer> getWeekdays(){
         ArrayList<Integer> weekdays = new ArrayList<>();
 
         if (mmondayCheckbox.isChecked()) {
@@ -92,5 +106,33 @@ public class AddAlertDialogFragment extends DialogFragment {
         }
 
         return weekdays;
+    }
+
+    private void setWeekdayCheckbox() {
+        Calendar calendar = Calendar.getInstance();
+
+        switch (calendar.get(Calendar.DAY_OF_WEEK)) {
+            case Calendar.MONDAY:
+                mmondayCheckbox.setChecked(true);
+                break;
+            case Calendar.TUESDAY:
+                mtuesdasCheckbox.setChecked(true);
+                break;
+            case Calendar.WEDNESDAY:
+                mwednesdayCheckbox.setChecked(true);
+                break;
+            case Calendar.THURSDAY:
+                mthursdayCheckbox.setChecked(true);
+                break;
+            case Calendar.FRIDAY:
+                mfridayCheckbox.setChecked(true);
+                break;
+            case Calendar.SATURDAY:
+                msaturdayCheckbox.setChecked(true);
+                break;
+            case Calendar.SUNDAY:
+                msundayCheckbox.setChecked(true);
+                break;
+        }
     }
 }
