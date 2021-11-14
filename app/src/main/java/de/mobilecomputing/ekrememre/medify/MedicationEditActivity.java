@@ -1,6 +1,8 @@
 package de.mobilecomputing.ekrememre.medify;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,6 +15,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -108,9 +112,30 @@ public class MedicationEditActivity extends AppCompatActivity {
         malertsViewAdapter = new AlertsViewAdapter(alertTimestamps);
 
         malertRecyclerview = (RecyclerView) findViewById(R.id.alert_recyclerview);
-//        malertRecyclerview.setHasFixedSize(true);
+        malertRecyclerview.setHasFixedSize(true);
         malertRecyclerview.setLayoutManager(new LinearLayoutManager(this));
         malertRecyclerview.setAdapter(malertsViewAdapter);
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                AlertTimestamp deletedTimestamp = alertTimestamps.get(position);
+
+                alertTimestamps.remove(viewHolder.getAdapterPosition());
+                malertsViewAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+
+                Snackbar.make(malertRecyclerview, deletedTimestamp.toString(), Snackbar.LENGTH_LONG).setAction("Undo", v -> {
+                    alertTimestamps.add(position, deletedTimestamp);
+                    malertsViewAdapter.notifyItemInserted(position);
+                }).show();
+            }
+        }).attachToRecyclerView(malertRecyclerview);
     }
 
     public void onSaveMedication(View view) {
