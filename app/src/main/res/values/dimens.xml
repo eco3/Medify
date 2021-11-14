@@ -2,4 +2,7 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="spacer">2</dimen>
+
+    <dimen name="weekday_textsize">14sp</dimen>
+    <dimen name="weekday_dimension">35dp</dimen>
 </resources>

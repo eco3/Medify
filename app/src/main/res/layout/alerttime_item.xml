@@ -18,85 +18,96 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="00:00"
-            android:textSize="20sp" />
+            android:textSize="34sp" />
 
         <LinearLayout
             android:id="@+id/weekday_labels"
-            android:layout_width="225dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="8dp"
-            android:layout_toEndOf="@id/alerttimeLabel"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/monday_label"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/weekday_monday"
-                android:textAlignment="center" />
-
-            <TextView
-                android:id="@+id/tuesday_label"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/weekday_tuesday"
-                android:textAlignment="center" />
-
-            <TextView
-                android:id="@+id/wednesday_label"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/weekday_wednesday"
-                android:textAlignment="center" />
-
-            <TextView
-                android:id="@+id/thursday_label"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/weekday_thursday"
-                android:textAlignment="center" />
-
-            <TextView
-                android:id="@+id/friday_label"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/weekday_friday"
-                android:textAlignment="center" />
-
-            <TextView
-                android:id="@+id/saturday_label"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/weekday_saturday"
-                android:textAlignment="center" />
-
-            <TextView
-                android:id="@+id/sunday_label"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/weekday_sunday"
-                android:textAlignment="center" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/delete_alert_button"
-            style="@style/ToggleButtonWithIconOnly"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="8dp"
-            android:layout_toEndOf="@id/weekday_labels"
-            app:icon="@android:drawable/ic_menu_delete"
-            app:iconTintMode="multiply"
-            tools:ignore="SpeakableTextPresentCheck" />
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@id/alerttimeLabel"
+            android:divider="@drawable/spacing"
+            android:orientation="horizontal"
+            android:showDividers="middle">
+
+            <TextView
+                android:id="@+id/monday_label"
+                android:layout_width="@dimen/weekday_dimension"
+                android:layout_height="@dimen/weekday_dimension"
+                android:background="@drawable/circle_textview_drawable"
+                android:backgroundTint="@color/weekday_inactive"
+                android:gravity="center"
+                android:text="@string/weekday_monday"
+                android:textAlignment="gravity"
+                android:textSize="@dimen/weekday_textsize" />
+
+            <TextView
+                android:id="@+id/tuesday_label"
+                android:layout_width="@dimen/weekday_dimension"
+                android:layout_height="@dimen/weekday_dimension"
+                android:background="@drawable/circle_textview_drawable"
+                android:backgroundTint="@color/weekday_inactive"
+                android:gravity="center"
+                android:text="@string/weekday_tuesday"
+                android:textAlignment="gravity"
+                android:textSize="@dimen/weekday_textsize" />
+
+            <TextView
+                android:id="@+id/wednesday_label"
+                android:layout_width="@dimen/weekday_dimension"
+                android:layout_height="@dimen/weekday_dimension"
+                android:background="@drawable/circle_textview_drawable"
+                android:backgroundTint="@color/weekday_inactive"
+                android:gravity="center"
+                android:text="@string/weekday_wednesday"
+                android:textAlignment="gravity"
+                android:textSize="@dimen/weekday_textsize" />
+
+            <TextView
+                android:id="@+id/thursday_label"
+                android:layout_width="@dimen/weekday_dimension"
+                android:layout_height="@dimen/weekday_dimension"
+                android:background="@drawable/circle_textview_drawable"
+                android:backgroundTint="@color/weekday_inactive"
+                android:gravity="center"
+                android:text="@string/weekday_thursday"
+                android:textAlignment="gravity"
+                android:textSize="@dimen/weekday_textsize" />
+
+            <TextView
+                android:id="@+id/friday_label"
+                android:layout_width="@dimen/weekday_dimension"
+                android:layout_height="@dimen/weekday_dimension"
+                android:background="@drawable/circle_textview_drawable"
+                android:backgroundTint="@color/weekday_inactive"
+                android:gravity="center"
+                android:text="@string/weekday_friday"
+                android:textAlignment="gravity"
+                android:textSize="@dimen/weekday_textsize" />
+
+            <TextView
+                android:id="@+id/saturday_label"
+                android:layout_width="@dimen/weekday_dimension"
+                android:layout_height="@dimen/weekday_dimension"
+                android:background="@drawable/circle_textview_drawable"
+                android:backgroundTint="@color/weekday_inactive"
+                android:gravity="center"
+                android:text="@string/weekday_saturday"
+                android:textAlignment="gravity"
+                android:textSize="@dimen/weekday_textsize" />
+
+            <TextView
+                android:id="@+id/sunday_label"
+                android:layout_width="@dimen/weekday_dimension"
+                android:layout_height="@dimen/weekday_dimension"
+                android:background="@drawable/circle_textview_drawable"
+                android:backgroundTint="@color/weekday_inactive"
+                android:gravity="center"
+                android:text="@string/weekday_sunday"
+                android:textAlignment="gravity"
+                android:textSize="@dimen/weekday_textsize" />
+        </LinearLayout>
 
     </RelativeLayout>
 
