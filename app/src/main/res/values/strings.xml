@@ -5,6 +5,7 @@
     <string name="hint_description">Description</string>
     <string name="alerts">Alerts</string>
 
+    <string name="cancel">Cancel</string>
     <string name="save">Save</string>
     <string name="edit">Edit</string>
 
@@ -15,4 +16,5 @@
     <string name="weekday_friday">Fri</string>
     <string name="weekday_saturday">Sat</string>
     <string name="weekday_sunday">Sun</string>
+    <string name="add_alert">Add Alert</string>
 </resources>
