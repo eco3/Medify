@@ -75,6 +75,15 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.save_medication) {
+            if (mnameEditText.getText().toString().equals("")) {
+                Snackbar.make(findViewById(R.id.medication_constraint), R.string.medication_name_empty_warning, Snackbar.LENGTH_LONG).show();
+                return false;
+            }
+            if (alertTimestamps.isEmpty()) {
+                Snackbar.make(findViewById(R.id.medication_constraint), R.string.alerttimestamps_empty_warning, Snackbar.LENGTH_LONG).show();
+                return false;
+            }
+
             // TODO: save medication.
 
 //            Medication medication = new Medication(name, description, timestamps);
@@ -109,7 +118,7 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
                 alertTimestamps.remove(position);
                 malertsViewAdapter.notifyItemRemoved(position);
 
-                Snackbar.make(malertRecyclerview, R.string.alert_deletion_message, Snackbar.LENGTH_LONG)
+                Snackbar.make(findViewById(R.id.medication_constraint), R.string.alert_deletion_message, Snackbar.LENGTH_LONG)
                         .setAction("Undo", v -> {
                             alertTimestamps.add(position, deletedTimestamp);
                             malertsViewAdapter.notifyItemInserted(position);
