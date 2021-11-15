@@ -14,9 +14,10 @@ public class AlertTimestamp {
     public long alertTimestampId;
     public long medicationParentId;
 
-    public ArrayList<Long> timestamps;
+    private ArrayList<Long> timestamps;
 
-    public AlertTimestamp() {
+    public AlertTimestamp(ArrayList<Long> timestamps) {
+        this.timestamps = timestamps;
     }
 
     public AlertTimestamp(Integer hour, Integer minute, List<Integer> weekdays) {
@@ -30,5 +31,9 @@ public class AlertTimestamp {
 
             timestamps.add(calendar.getTimeInMillis());
         }
+    }
+
+    public ArrayList<Long> getTimestamps() {
+        return timestamps;
     }
 }

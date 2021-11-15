@@ -16,10 +16,6 @@ public class Medication {
         this.description = description;
     }
 
-    public long getMedicationId() {
-        return medicationId;
-    }
-
     public String getName() {
         return name;
     }

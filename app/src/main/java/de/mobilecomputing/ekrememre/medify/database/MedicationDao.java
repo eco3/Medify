@@ -1,5 +1,6 @@
 package de.mobilecomputing.ekrememre.medify.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -15,7 +16,7 @@ import de.mobilecomputing.ekrememre.medify.entities.MedicationWithAlertTimestamp
 public interface MedicationDao {
     @Transaction
     @Query("SELECT * FROM medication")
-    List<MedicationWithAlertTimestamps> getMedicationWithAlertTimestamps();
+    LiveData<List<MedicationWithAlertTimestamps>> getMedicationWithAlertTimestamps();
 
     @Transaction
     @Insert

@@ -3,6 +3,7 @@ package de.mobilecomputing.ekrememre.medify;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,7 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.mobilecomputing.ekrememre.medify.entities.AlertTimestamp;
+import de.mobilecomputing.ekrememre.medify.entities.Medication;
 import de.mobilecomputing.ekrememre.medify.recyclerviews.AlertsViewAdapter;
+import de.mobilecomputing.ekrememre.medify.viewmodels.MedicationViewModel;
 
 public class MedicationEditActivity extends AppCompatActivity implements AddAlertDialogFragment.AddAlertDialogListener {
     private static final String TAG = "MedicationEditActivity";
@@ -84,13 +87,18 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
                 return false;
             }
 
-            // TODO: save medication.
+            Medication medication = new Medication(
+                    mnameEditText.getText().toString(),
+                    mdescriptionEditText.getText().toString()
+            );
 
-//            Medication medication = new Medication(name, description, timestamps);
-//            Intent intent = new Intent();
-//            intent.putExtra(MEDICATION_OBJECT, medication);
-//            setResult(RESULT_OK, intent);
-//            finish();
+            MedicationViewModel medicationViewModel = new ViewModelProvider(this).get(MedicationViewModel.class);
+            medicationViewModel.insert(medication, alertTimestamps);
+
+
+            Intent intent = new Intent();
+            setResult(RESULT_OK, intent);
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);

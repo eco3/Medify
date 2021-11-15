@@ -67,14 +67,14 @@ public class AlertsViewAdapter extends RecyclerView.Adapter<AlertsViewAdapter.Vi
     @SuppressLint("DefaultLocale")
     @Override
     public void onBindViewHolder(@NonNull AlertsViewAdapter.ViewHolder holder, int position) {
-        if (this.alertTimestamps.get(position).timestamps.isEmpty()) {
+        if (this.alertTimestamps.get(position).getTimestamps().isEmpty()) {
             throw new IllegalStateException("Timestamps member of AlertTimestamp cannot be empty.");
         }
 
         int hour = 0;
         int minute = 0;
 
-        for (long timestamp : this.alertTimestamps.get(position).timestamps) {
+        for (long timestamp : this.alertTimestamps.get(position).getTimestamps()) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(timestamp);
 

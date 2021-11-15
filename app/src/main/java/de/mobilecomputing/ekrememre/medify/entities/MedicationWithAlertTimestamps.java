@@ -7,14 +7,24 @@ import java.util.List;
 
 public class MedicationWithAlertTimestamps {
     @Embedded
-    public Medication medication;
+    private Medication medication;
 
     @Relation(
         parentColumn = "medicationId",
         entityColumn = "medicationParentId"
     )
-    public List<AlertTimestamp> alertTimestamps;
+    private List<AlertTimestamp> alertTimestamps;
 
-    public MedicationWithAlertTimestamps() {
+    public MedicationWithAlertTimestamps(Medication medication, List<AlertTimestamp> alertTimestamps) {
+        this.medication = medication;
+        this.alertTimestamps = alertTimestamps;
+    }
+
+    public Medication getMedication() {
+        return medication;
+    }
+
+    public List<AlertTimestamp> getAlertTimestamps() {
+        return alertTimestamps;
     }
 }
