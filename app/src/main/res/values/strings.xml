@@ -23,4 +23,6 @@
     <string name="alert_deletion_message">Alert was deleted.</string>
     <string name="medication_name_empty_warning">Please add a medication name.</string>
     <string name="alerttimestamps_empty_warning">Please add an alert.</string>
+    <string name="next_alarm">Next alarm:</string>
+    <string name="at">at</string>
 </resources>

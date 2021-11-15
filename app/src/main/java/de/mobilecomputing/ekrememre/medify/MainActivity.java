@@ -4,22 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import java.util.ArrayList;
-
-import de.mobilecomputing.ekrememre.medify.database.MedicationDatabase;
-import de.mobilecomputing.ekrememre.medify.entities.Medication;
-import de.mobilecomputing.ekrememre.medify.recyclerviews.AlertsViewAdapter;
 import de.mobilecomputing.ekrememre.medify.recyclerviews.MedicationsViewAdapter;
 import de.mobilecomputing.ekrememre.medify.viewmodels.MedicationViewModel;
 
@@ -52,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         medicationViewModel.getAllMedications().observe(this, medications -> {
             Log.d(TAG, "number of medications: " + medications.size());
 
-            mmedicationsViewAdapter.updateUserList(medications);
+            mmedicationsViewAdapter.updateData(medications);
         });
     }
 

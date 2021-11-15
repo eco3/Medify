@@ -36,4 +36,33 @@ public class AlertTimestamp {
     public ArrayList<Long> getTimestamps() {
         return timestamps;
     }
+
+    public ArrayList<Calendar> getCalendars() {
+        ArrayList<Calendar> calendars = new ArrayList<>();
+
+        for (Long timestamp : timestamps) {
+            Calendar tmpCalendar = Calendar.getInstance();
+            Calendar calendar = Calendar.getInstance();
+
+            tmpCalendar.setTimeInMillis(timestamp);
+            calendar.set(Calendar.HOUR_OF_DAY, tmpCalendar.get(Calendar.HOUR_OF_DAY));
+            calendar.set(Calendar.MINUTE, tmpCalendar.get(Calendar.MINUTE));
+            calendar.set(Calendar.DAY_OF_WEEK, tmpCalendar.get(Calendar.DAY_OF_WEEK));
+
+            calendars.add(calendar);
+        }
+
+        calendars.sort((item1, item2) -> {
+            if (item1.equals(item2)) {
+                return 0;
+            }
+            if (item1.before(item2)) {
+                return -1;
+            } else {
+                return 1;
+            }
+        });
+
+        return calendars;
+    }
 }

@@ -1,8 +1,11 @@
 package de.mobilecomputing.ekrememre.medify.entities;
 
+import android.icu.util.Calendar;
+
 import androidx.room.Embedded;
 import androidx.room.Relation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MedicationWithAlertTimestamps {
@@ -26,5 +29,39 @@ public class MedicationWithAlertTimestamps {
 
     public List<AlertTimestamp> getAlertTimestamps() {
         return alertTimestamps;
+    }
+
+    public ArrayList<Calendar> getCalendars() {
+        ArrayList<Calendar> calendars = new ArrayList<>();
+
+        for (AlertTimestamp alertTimestamp : alertTimestamps) {
+            calendars.addAll(alertTimestamp.getCalendars());
+        }
+
+        calendars.sort((item1, item2) -> {
+            if (item1.equals(item2)) {
+                return 0;
+            }
+            if (item1.before(item2)) {
+                return -1;
+            } else {
+                return 1;
+            }
+        });
+
+        return calendars;
+    }
+
+    public Calendar getNextAlarm() {
+        Calendar now = Calendar.getInstance();
+        ArrayList<Calendar> alerts = getCalendars();
+
+        for (Calendar alert : alerts) {
+            if (now.before(alert)) {
+                return alert;
+            }
+        }
+
+        return alerts.get(0);
     }
 }
