@@ -41,13 +41,48 @@ public class AlertsViewAdapter extends RecyclerView.Adapter<AlertsViewAdapter.Vi
             sundayLabel = (TextView) view.findViewById(R.id.sunday_label);
         }
 
-        public TextView getAlerttimeLabel() {
-            return alerttimeLabel;
+        @SuppressLint("DefaultLocale")
+        public void bind(List<Long> timestamps) {
+            int hour = 0;
+            int minute = 0;
+
+            for (long timestamp : timestamps) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(timestamp);
+
+                hour = calendar.get(Calendar.HOUR_OF_DAY);
+                minute = calendar.get(Calendar.MINUTE);
+
+                switch (calendar.get(Calendar.DAY_OF_WEEK)) {
+                    case Calendar.MONDAY:
+                        mondayLabel.getBackground().setTint(this.itemView.getContext().getColor(R.color.weekday_active));
+                        break;
+                    case Calendar.TUESDAY:
+                        tuesdayLabel.getBackground().setTint(this.itemView.getContext().getColor(R.color.weekday_active));
+                        break;
+                    case Calendar.WEDNESDAY:
+                        wedsdayLabel.getBackground().setTint(this.itemView.getContext().getColor(R.color.weekday_active));
+                        break;
+                    case Calendar.THURSDAY:
+                        thursdayLabel.getBackground().setTint(this.itemView.getContext().getColor(R.color.weekday_active));
+                        break;
+                    case Calendar.FRIDAY:
+                        fridayLabel.getBackground().setTint(this.itemView.getContext().getColor(R.color.weekday_active));
+                        break;
+                    case Calendar.SATURDAY:
+                        saturdayLabel.getBackground().setTint(this.itemView.getContext().getColor(R.color.weekday_active));
+                        break;
+                    case Calendar.SUNDAY:
+                        sundayLabel.getBackground().setTint(this.itemView.getContext().getColor(R.color.weekday_active));
+                        break;
+                }
+            }
+
+            alerttimeLabel.setText(String.format("%02d:%02d", hour, minute));
         }
     }
 
     private final List<AlertTimestamp> alertTimestamps;
-    private int weekday_inactive_color;
 
     public AlertsViewAdapter(List<AlertTimestamp> alertTimestamps){
         this.alertTimestamps = alertTimestamps;
@@ -59,54 +94,16 @@ public class AlertsViewAdapter extends RecyclerView.Adapter<AlertsViewAdapter.Vi
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.alerttime_item, viewGroup, false);
 
-        weekday_inactive_color = v.getContext().getColor(R.color.weekday_active);
-
         return new ViewHolder(v);
     }
 
-    @SuppressLint("DefaultLocale")
     @Override
     public void onBindViewHolder(@NonNull AlertsViewAdapter.ViewHolder holder, int position) {
         if (this.alertTimestamps.get(position).getTimestamps().isEmpty()) {
             throw new IllegalStateException("Timestamps member of AlertTimestamp cannot be empty.");
         }
 
-        int hour = 0;
-        int minute = 0;
-
-        for (long timestamp : this.alertTimestamps.get(position).getTimestamps()) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(timestamp);
-
-            hour = calendar.get(Calendar.HOUR_OF_DAY);
-            minute = calendar.get(Calendar.MINUTE);
-
-            switch (calendar.get(Calendar.DAY_OF_WEEK)) {
-                case Calendar.MONDAY:
-                    holder.mondayLabel.getBackground().setTint(weekday_inactive_color);
-                    break;
-                case Calendar.TUESDAY:
-                    holder.tuesdayLabel.getBackground().setTint(weekday_inactive_color);
-                    break;
-                case Calendar.WEDNESDAY:
-                    holder.wedsdayLabel.getBackground().setTint(weekday_inactive_color);
-                    break;
-                case Calendar.THURSDAY:
-                    holder.thursdayLabel.getBackground().setTint(weekday_inactive_color);
-                    break;
-                case Calendar.FRIDAY:
-                    holder.fridayLabel.getBackground().setTint(weekday_inactive_color);
-                    break;
-                case Calendar.SATURDAY:
-                    holder.saturdayLabel.getBackground().setTint(weekday_inactive_color);
-                    break;
-                case Calendar.SUNDAY:
-                    holder.sundayLabel.getBackground().setTint(weekday_inactive_color);
-                    break;
-            }
-        }
-
-        holder.alerttimeLabel.setText(String.format("%02d:%02d", hour, minute));
+        holder.bind(this.alertTimestamps.get(position).getTimestamps());
     }
 
     @Override
