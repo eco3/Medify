@@ -24,6 +24,7 @@ import java.util.List;
 
 import de.mobilecomputing.ekrememre.medify.entities.AlertTimestamp;
 import de.mobilecomputing.ekrememre.medify.entities.Medication;
+import de.mobilecomputing.ekrememre.medify.fragments.AddAlertDialogFragment;
 import de.mobilecomputing.ekrememre.medify.recyclerviews.AlertsViewAdapter;
 import de.mobilecomputing.ekrememre.medify.viewmodels.MedicationViewModel;
 

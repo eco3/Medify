@@ -1,4 +1,4 @@
-package de.mobilecomputing.ekrememre.medify;
+package de.mobilecomputing.ekrememre.medify.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -18,6 +18,8 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.mobilecomputing.ekrememre.medify.R;
 
 public class AddAlertDialogFragment extends DialogFragment {
     private static final String TAG = "AddAlertDialogFragment";
