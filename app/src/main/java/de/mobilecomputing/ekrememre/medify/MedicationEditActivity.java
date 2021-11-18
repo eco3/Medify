@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,40 +29,42 @@ import de.mobilecomputing.ekrememre.medify.viewmodels.MedicationViewModel;
 
 public class MedicationEditActivity extends AppCompatActivity implements AddAlertDialogFragment.AddAlertDialogListener {
     private static final String TAG = "MedicationEditActivity";
-    public static final String MEDICATION_OBJECT = "MEDICATION_OBJECT";
 
     private EditText mnameEditText;
     private EditText mdescriptionEditText;
 
-    private RecyclerView malertRecyclerview;
     private AlertsViewAdapter malertsViewAdapter;
 
     private List<AlertTimestamp> alertTimestamps;
+    private MedicationViewModel medicationViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medication);
 
-        Intent intent = getIntent();
-        int requestCode = intent.getIntExtra(MainActivity.REQUEST_CODE_EXTRA, -1);
-
-        if (requestCode == -1) {
-            throw new IllegalStateException("No RequestCode was set.");
-        }
-
         mnameEditText = (EditText) findViewById(R.id.name_editText);
         mdescriptionEditText = (EditText) findViewById(R.id.description_editText);
+        medicationViewModel = new ViewModelProvider(this).get(MedicationViewModel.class);
 
-        alertTimestamps = new ArrayList<>();
+        Intent intent = getIntent();
+        long medication_id = intent.getLongExtra(MainActivity.MEDICATION_ID_EXTRA, -1);
+
+        if (medication_id == -1) {
+            alertTimestamps = new ArrayList<>();
+        } else {
+            Log.d(TAG, "onCreate: " + medication_id);
+            alertTimestamps = new ArrayList<>();
+        }
+
         malertsViewAdapter = new AlertsViewAdapter(alertTimestamps);
+        RecyclerView alertRecyclerView = findViewById(R.id.alert_recyclerview);
 
-        malertRecyclerview = findViewById(R.id.alert_recyclerview);
-        malertRecyclerview.setHasFixedSize(true);
-        malertRecyclerview.setLayoutManager(new LinearLayoutManager(this));
-        malertRecyclerview.setAdapter(malertsViewAdapter);
+        alertRecyclerView.setHasFixedSize(true);
+        alertRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        alertRecyclerView.setAdapter(malertsViewAdapter);
 
-        onAlertSwipe().attachToRecyclerView(malertRecyclerview);
+        onAlertSwipe().attachToRecyclerView(alertRecyclerView);
     }
 
     public void onAddAlert(View view) {
@@ -71,6 +74,7 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
 
     @Override
     public void onDialogPositiveClick(Integer hour, Integer minute, List<Integer> weekdays) {
+        // TODO: Sort this list
         alertTimestamps.add(new AlertTimestamp(hour, minute, weekdays));
         malertsViewAdapter.notifyItemInserted(alertTimestamps.size());
     }
@@ -92,12 +96,8 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
                     mdescriptionEditText.getText().toString()
             );
 
-            MedicationViewModel medicationViewModel = new ViewModelProvider(this).get(MedicationViewModel.class);
             medicationViewModel.insert(medication, alertTimestamps);
 
-
-            Intent intent = new Intent();
-            setResult(RESULT_OK, intent);
             finish();
             return true;
         }
