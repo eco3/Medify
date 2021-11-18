@@ -21,9 +21,11 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import de.mobilecomputing.ekrememre.medify.entities.AlertTimestamp;
 import de.mobilecomputing.ekrememre.medify.entities.Medication;
+import de.mobilecomputing.ekrememre.medify.entities.MedicationWithAlertTimestamps;
 import de.mobilecomputing.ekrememre.medify.fragments.AddAlertDialogFragment;
 import de.mobilecomputing.ekrememre.medify.recyclerviews.AlertsViewAdapter;
 import de.mobilecomputing.ekrememre.medify.viewmodels.MedicationViewModel;
@@ -54,8 +56,17 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
         if (medication_id == -1) {
             alertTimestamps = new ArrayList<>();
         } else {
-            Log.d(TAG, "onCreate: " + medication_id);
-            alertTimestamps = new ArrayList<>();
+            try {
+                MedicationWithAlertTimestamps fetchedMedication = medicationViewModel.getMedication(medication_id);
+
+                mnameEditText.setText(fetchedMedication.getMedication().getName());
+                mdescriptionEditText.setText(fetchedMedication.getMedication().getDescription());
+                alertTimestamps = fetchedMedication.getAlertTimestamps();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+                // TODO: add feedback.
+                finish();
+            }
         }
 
         malertsViewAdapter = new AlertsViewAdapter(alertTimestamps);
@@ -68,16 +79,11 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
         onAlertSwipe().attachToRecyclerView(alertRecyclerView);
     }
 
-    public void onAddAlert(View view) {
-        DialogFragment newFragment = new AddAlertDialogFragment();
-        newFragment.show(getSupportFragmentManager(), "addAlert");
-    }
-
     @Override
-    public void onDialogPositiveClick(Integer hour, Integer minute, List<Integer> weekdays) {
-        // TODO: Sort this list
-        alertTimestamps.add(new AlertTimestamp(hour, minute, weekdays));
-        malertsViewAdapter.notifyItemInserted(alertTimestamps.size());
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.medication_menu, menu);
+        return true;
     }
 
     @Override
@@ -105,11 +111,16 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
         return super.onOptionsItemSelected(item);
     }
 
+    public void onAddAlertClick(View view) {
+        DialogFragment newFragment = new AddAlertDialogFragment();
+        newFragment.show(getSupportFragmentManager(), "addAlert");
+    }
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.medication_menu, menu);
-        return true;
+    public void onDialogPositiveClick(Integer hour, Integer minute, List<Integer> weekdays) {
+        // TODO: Sort this list
+        alertTimestamps.add(new AlertTimestamp(hour, minute, weekdays));
+        malertsViewAdapter.notifyItemInserted(alertTimestamps.size());
     }
 
     private ItemTouchHelper onAlertSwipe() {

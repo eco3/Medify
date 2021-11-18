@@ -1,11 +1,13 @@
 package de.mobilecomputing.ekrememre.medify.database;
 
 import android.app.Application;
-import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import de.mobilecomputing.ekrememre.medify.entities.AlertTimestamp;
 import de.mobilecomputing.ekrememre.medify.entities.Medication;
@@ -18,11 +20,17 @@ public class MedicationRepository {
     public MedicationRepository(Application application) {
         MedicationDatabase db = MedicationDatabase.getDatabase(application);
         medicationDao = db.medicationDao();
-        medications = medicationDao.getMedicationWithAlertTimestamps();
+        medications = medicationDao.getMedicationsWithAlertTimestamps();
     }
 
     public LiveData<List<MedicationWithAlertTimestamps>> getAllMedications() {
         return medications;
+    }
+
+    public MedicationWithAlertTimestamps getMedication(long id) throws ExecutionException, InterruptedException {
+        Future<MedicationWithAlertTimestamps> med = MedicationDatabase.databaseWriteExecutor.submit(() -> medicationDao.getMedicationWithAlertTimestamps(id));
+        //GET SHOULD WAIT UNTIL WE GET WHAT WE WANT
+        return med.get();
     }
 
     public void insert(Medication medication, List<AlertTimestamp> alertTimestamps) {

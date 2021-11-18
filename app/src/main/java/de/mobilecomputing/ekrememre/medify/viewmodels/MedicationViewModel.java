@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import de.mobilecomputing.ekrememre.medify.database.MedicationRepository;
 import de.mobilecomputing.ekrememre.medify.entities.AlertTimestamp;
@@ -25,6 +26,10 @@ public class MedicationViewModel extends AndroidViewModel {
 
     public LiveData<List<MedicationWithAlertTimestamps>> getAllMedications() {
         return medications;
+    }
+
+    public MedicationWithAlertTimestamps getMedication(long id) throws ExecutionException, InterruptedException {
+        return medicationRepository.getMedication(id);
     }
 
     public void insert(Medication medication, List<AlertTimestamp> alertTimestamps) {
