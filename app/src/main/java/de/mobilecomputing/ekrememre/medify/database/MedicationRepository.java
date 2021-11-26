@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -28,8 +27,10 @@ public class MedicationRepository {
     }
 
     public MedicationWithAlertTimestamps getMedication(long id) throws ExecutionException, InterruptedException {
-        Future<MedicationWithAlertTimestamps> med = MedicationDatabase.databaseWriteExecutor.submit(() -> medicationDao.getMedicationWithAlertTimestamps(id));
-        //GET SHOULD WAIT UNTIL WE GET WHAT WE WANT
+        Future<MedicationWithAlertTimestamps> med = MedicationDatabase.databaseWriteExecutor.submit(
+                () -> medicationDao.getMedicationWithAlertTimestamps(id)
+        );
+
         return med.get();
     }
 
@@ -42,5 +43,24 @@ public class MedicationRepository {
             }
             medicationDao.insertAlertTimestamps(alertTimestamps);
         });
+    }
+
+    public void update(Medication medication, List<AlertTimestamp> alertTimestamps) {
+        MedicationDatabase.databaseWriteExecutor.execute(() -> {
+            medicationDao.updateMedication(medication);
+
+            for (AlertTimestamp alertTimestamp : alertTimestamps) {
+                alertTimestamp.medicationParentId = medication.medicationId;
+            }
+            medicationDao.insertAlertTimestamps(alertTimestamps);
+        });
+    }
+
+    public void removeAlertTimestamp(AlertTimestamp alertTimestamp) {
+        MedicationDatabase.databaseWriteExecutor.execute(() -> medicationDao.deleteAlertTimestamp(alertTimestamp));
+    }
+
+    public void insertAlertTimestamp(AlertTimestamp alertTimestamp) {
+        MedicationDatabase.databaseWriteExecutor.execute(() -> medicationDao.insertAlertTimestamp(alertTimestamp));
     }
 }

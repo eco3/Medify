@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class AlertsViewAdapter extends RecyclerView.Adapter<AlertsViewAdapter.Vi
     private static final String TAG = "AlertsViewAdapter";
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final CardView cardView;
         private final TextView alerttimeLabel;
         private final TextView mondayLabel;
         private final TextView tuesdayLabel;
@@ -31,6 +33,7 @@ public class AlertsViewAdapter extends RecyclerView.Adapter<AlertsViewAdapter.Vi
         public ViewHolder(View view) {
             super(view);
 
+            cardView = (CardView) view.findViewById(R.id.alerttime_cardview);
             alerttimeLabel = (TextView) view.findViewById(R.id.alerttime_label);
             mondayLabel = (TextView) view.findViewById(R.id.monday_label);
             tuesdayLabel = (TextView) view.findViewById(R.id.tuesday_label);

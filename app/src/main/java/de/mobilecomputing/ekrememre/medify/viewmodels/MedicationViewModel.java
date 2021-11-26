@@ -35,4 +35,16 @@ public class MedicationViewModel extends AndroidViewModel {
     public void insert(Medication medication, List<AlertTimestamp> alertTimestamps) {
         medicationRepository.insert(medication, alertTimestamps);
     }
+
+    public void update(Medication medication, List<AlertTimestamp> alertTimestamps) {
+        medicationRepository.update(medication, alertTimestamps);
+    }
+
+    public void removeAlertTimestamp(AlertTimestamp alertTimestamp) {
+        medicationRepository.removeAlertTimestamp(alertTimestamp);
+    }
+
+    public void insertAlertTimestamp(AlertTimestamp alertTimestamp) {
+        medicationRepository.insertAlertTimestamp(alertTimestamp);
+    }
 }

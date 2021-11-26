@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -41,6 +40,8 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
     private List<AlertTimestamp> alertTimestamps;
     private MedicationViewModel medicationViewModel;
 
+    private long fetchedMedicationId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,13 +52,13 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
         medicationViewModel = new ViewModelProvider(this).get(MedicationViewModel.class);
 
         Intent intent = getIntent();
-        long medication_id = intent.getLongExtra(MainActivity.MEDICATION_ID_EXTRA, -1);
+        fetchedMedicationId = intent.getLongExtra(MainActivity.MEDICATION_ID_EXTRA, -1);
 
-        if (medication_id == -1) {
+        if (fetchedMedicationId == -1) {
             alertTimestamps = new ArrayList<>();
         } else {
             try {
-                MedicationWithAlertTimestamps fetchedMedication = medicationViewModel.getMedication(medication_id);
+                MedicationWithAlertTimestamps fetchedMedication = medicationViewModel.getMedication(fetchedMedicationId);
 
                 mnameEditText.setText(fetchedMedication.getMedication().getName());
                 mdescriptionEditText.setText(fetchedMedication.getMedication().getDescription());
@@ -103,7 +104,12 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
                     mdescriptionEditText.getText().toString()
             );
 
-            medicationViewModel.insert(medication, alertTimestamps);
+            if (fetchedMedicationId != -1) {
+                medication.medicationId = fetchedMedicationId;
+                medicationViewModel.update(medication, alertTimestamps);
+            } else {
+                medicationViewModel.insert(medication, alertTimestamps);
+            }
 
             finish();
             return true;
@@ -138,11 +144,15 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
                 alertTimestamps.remove(position);
                 malertsViewAdapter.notifyItemRemoved(position);
 
+                medicationViewModel.removeAlertTimestamp(deletedTimestamp);
+
                 Snackbar.make(findViewById(R.id.medication_constraint), R.string.alert_deletion_message, Snackbar.LENGTH_LONG)
-                        .setAction("Undo", v -> {
-                            alertTimestamps.add(position, deletedTimestamp);
-                            malertsViewAdapter.notifyItemInserted(position);
-                        }).show();
+                    .setAction("Undo", v -> {
+                        alertTimestamps.add(position, deletedTimestamp);
+                        malertsViewAdapter.notifyItemInserted(position);
+
+                        medicationViewModel.insertAlertTimestamp(deletedTimestamp);
+                    }).show();
             }
         });
     }
