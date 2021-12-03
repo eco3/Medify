@@ -38,6 +38,7 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
     private AlertsViewAdapter malertsViewAdapter;
 
     private List<AlertTimestamp> alertTimestamps;
+    private List<AlertTimestamp> alertTimestampsToRemove;
     private MedicationViewModel medicationViewModel;
 
     private long fetchedMedicationId;
@@ -50,6 +51,8 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
         mnameEditText = (EditText) findViewById(R.id.name_editText);
         mdescriptionEditText = (EditText) findViewById(R.id.description_editText);
         medicationViewModel = new ViewModelProvider(this).get(MedicationViewModel.class);
+
+        alertTimestampsToRemove = new ArrayList<>();
 
         Intent intent = getIntent();
         fetchedMedicationId = intent.getLongExtra(MainActivity.MEDICATION_ID_EXTRA, -1);
@@ -99,6 +102,10 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
                 return false;
             }
 
+            for (AlertTimestamp alertTimestamp : alertTimestampsToRemove) {
+                medicationViewModel.removeAlertTimestamp(alertTimestamp);
+            }
+
             Medication medication = new Medication(
                     mnameEditText.getText().toString(),
                     mdescriptionEditText.getText().toString()
@@ -139,19 +146,17 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
-                AlertTimestamp deletedTimestamp = alertTimestamps.get(position);
+
+                int removePosition = alertTimestampsToRemove.size();
+                alertTimestampsToRemove.add(removePosition, alertTimestamps.get(position));
 
                 alertTimestamps.remove(position);
                 malertsViewAdapter.notifyItemRemoved(position);
 
-                medicationViewModel.removeAlertTimestamp(deletedTimestamp);
-
                 Snackbar.make(findViewById(R.id.medication_constraint), R.string.alert_deletion_message, Snackbar.LENGTH_LONG)
                     .setAction("Undo", v -> {
-                        alertTimestamps.add(position, deletedTimestamp);
+                        alertTimestamps.add(position, alertTimestampsToRemove.remove(removePosition));
                         malertsViewAdapter.notifyItemInserted(position);
-
-                        medicationViewModel.insertAlertTimestamp(deletedTimestamp);
                     }).show();
             }
         });
