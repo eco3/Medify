@@ -16,7 +16,7 @@
             android:exported="false" />
 
         <receiver
-            android:name=".MedicationAlertReceiver"
+            android:name=".alertutils.MedicationAlertReceiver"
             android:enabled="true"
             android:exported="true" />
 

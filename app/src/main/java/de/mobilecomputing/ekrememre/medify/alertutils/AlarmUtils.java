@@ -1,4 +1,4 @@
-package de.mobilecomputing.ekrememre.medify;
+package de.mobilecomputing.ekrememre.medify.alertutils;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -8,6 +8,7 @@ import android.icu.util.Calendar;
 
 import androidx.core.app.NotificationCompat;
 
+import de.mobilecomputing.ekrememre.medify.R;
 import de.mobilecomputing.ekrememre.medify.entities.Medication;
 
 public class AlarmUtils {

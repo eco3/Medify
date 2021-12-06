@@ -1,4 +1,4 @@
-package de.mobilecomputing.ekrememre.medify;
+package de.mobilecomputing.ekrememre.medify.alertutils;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -6,6 +6,8 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
+import de.mobilecomputing.ekrememre.medify.R;
 
 public class MedicationAlertReceiver extends BroadcastReceiver {
     private static final String TAG = "MedicationAlertReceiver";
