@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.icu.util.Calendar;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
@@ -12,31 +13,40 @@ import de.mobilecomputing.ekrememre.medify.R;
 import de.mobilecomputing.ekrememre.medify.entities.Medication;
 
 public class AlarmUtils {
+    private static final String TAG = "AlarmUtils";
+
     public static final String CHANNEL_ID = "MEDIFY_CHANNEL";
     public static final String NOTIFICATION_CHANNEL_ID = "10001" ;
 
     public static PendingIntent createPendingIntent(Context context, Medication medication, long timestamp) {
         Intent intent = new Intent(context, MedicationAlertReceiver.class);
-
         int uniqueID = Math.abs((int)timestamp);
+        int flag = PendingIntent.FLAG_IMMUTABLE;
 
-        intent.putExtra(MedicationAlertReceiver.EXTRA_NOTIFICATION_ID, uniqueID);
-        intent.putExtra(MedicationAlertReceiver.EXTRA_NOTIFICATION, getNotification(context, medication, timestamp));
+        Log.d(TAG, "createPendingIntent: timestamp: " +  timestamp + " - uniqueID: " + uniqueID);
 
-        return PendingIntent.getBroadcast(context, uniqueID, intent, PendingIntent.FLAG_IMMUTABLE);
+        if (medication == null) {
+            flag = PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT;
+        } else {
+            intent.putExtra(MedicationAlertReceiver.EXTRA_NOTIFICATION_ID, uniqueID);
+            intent.putExtra(MedicationAlertReceiver.EXTRA_NOTIFICATION, getNotification(context, medication, timestamp));
+        }
+
+        return PendingIntent.getBroadcast(context, uniqueID, intent, flag);
     }
 
     private static Notification getNotification (Context context, Medication medication, long timestamp) {
         // TODO: REMOVE
             Calendar tmpCalendar = Calendar.getInstance();
             tmpCalendar.setTimeInMillis(timestamp);
-            String tmpString = " - " + tmpCalendar.get(Calendar.HOUR_OF_DAY) + ":" + tmpCalendar.get(Calendar.MINUTE);
+            String tmpString1 = " - " + tmpCalendar.get(Calendar.HOUR_OF_DAY) + ":" + tmpCalendar.get(Calendar.MINUTE);
+            String tmString2 = " - (" + (int)timestamp + ") | (" + Math.abs((int)timestamp) + ")";
         // TODO: REMOVE
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle(medication.getName() + tmpString)
-            .setContentText(medication.getDescription() + " (" + (int)timestamp + ") | (" + Math.abs((int)timestamp) + ")")
+            .setContentTitle(medication.getName() + tmpString1)
+            .setContentText(medication.getDescription() + tmString2)
             .setAutoCancel(true)
             .setChannelId(NOTIFICATION_CHANNEL_ID)
             .setPriority(NotificationCompat.PRIORITY_HIGH)

@@ -8,11 +8,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -27,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import de.mobilecomputing.ekrememre.medify.alertutils.AlarmUtils;
 import de.mobilecomputing.ekrememre.medify.entities.AlertTimestamp;
 import de.mobilecomputing.ekrememre.medify.entities.Medication;
 import de.mobilecomputing.ekrememre.medify.entities.MedicationWithAlertTimestamps;
@@ -37,8 +32,6 @@ import de.mobilecomputing.ekrememre.medify.viewmodels.MedicationViewModel;
 
 public class MedicationEditActivity extends AppCompatActivity implements AddAlertDialogFragment.AddAlertDialogListener {
     private static final String TAG = "MedicationEditActivity";
-
-    private AlarmManager alarmManager;
 
     private EditText mnameEditText;
     private EditText mdescriptionEditText;
@@ -55,8 +48,6 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medication);
-
-        alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
 
         mnameEditText = (EditText) findViewById(R.id.name_editText);
         mdescriptionEditText = (EditText) findViewById(R.id.description_editText);
@@ -129,13 +120,6 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
             } else {
                 // If Medication is a new one.
                 medicationViewModel.insert(medication, alertTimestamps);
-
-                for (Calendar calendar : MedicationWithAlertTimestamps.generateCalendars(alertTimestamps)) {
-                    Log.d(TAG, "onOptionsItemSelected: " + calendar.getTimeInMillis());
-
-                    PendingIntent pendingIntent = AlarmUtils.createPendingIntent(this, medication, calendar.getTimeInMillis());
-                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent);
-                }
             }
 
             finish();

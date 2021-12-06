@@ -50,14 +50,8 @@ public class AlertTimestamp {
         ArrayList<Calendar> calendars = new ArrayList<>();
 
         for (Long timestamp : timestamps) {
-            Calendar tmpCalendar = Calendar.getInstance();
             Calendar calendar = Calendar.getInstance();
-
-            tmpCalendar.setTimeInMillis(timestamp);
-            calendar.set(Calendar.HOUR_OF_DAY, tmpCalendar.get(Calendar.HOUR_OF_DAY));
-            calendar.set(Calendar.MINUTE, tmpCalendar.get(Calendar.MINUTE));
-            calendar.set(Calendar.DAY_OF_WEEK, tmpCalendar.get(Calendar.DAY_OF_WEEK));
-
+            calendar.setTimeInMillis(timestamp);
             calendars.add(calendar);
         }
 
