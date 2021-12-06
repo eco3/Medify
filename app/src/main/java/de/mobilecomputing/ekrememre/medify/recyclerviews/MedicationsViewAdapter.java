@@ -105,11 +105,11 @@ public class MedicationsViewAdapter extends RecyclerView.Adapter<MedicationsView
         return medications.size();
     }
 
-    public void updateData(final List<MedicationWithAlertTimestamps> medications) {
-        MedicationsDiffCallback medicationsDiffCallback = new MedicationsDiffCallback(this.medications, medications);
+    public void updateData(final List<MedicationWithAlertTimestamps> newMedications) {
+        MedicationsDiffCallback medicationsDiffCallback = new MedicationsDiffCallback(this.medications, newMedications);
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(medicationsDiffCallback);
         this.medications.clear();
-        this.medications = medications;
+        this.medications.addAll(newMedications);
         diffResult.dispatchUpdatesTo(this);
     }
 }
