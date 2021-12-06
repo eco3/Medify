@@ -8,8 +8,13 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.icu.util.Calendar;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -32,6 +37,8 @@ import de.mobilecomputing.ekrememre.medify.viewmodels.MedicationViewModel;
 public class MedicationEditActivity extends AppCompatActivity implements AddAlertDialogFragment.AddAlertDialogListener {
     private static final String TAG = "MedicationEditActivity";
 
+    private AlarmManager alarmManager;
+
     private EditText mnameEditText;
     private EditText mdescriptionEditText;
 
@@ -47,6 +54,8 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medication);
+
+        alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
 
         mnameEditText = (EditText) findViewById(R.id.name_editText);
         mdescriptionEditText = (EditText) findViewById(R.id.description_editText);
@@ -102,20 +111,30 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
                 return false;
             }
 
+            // Persist removing all removed AlertTimestamps.
             for (AlertTimestamp alertTimestamp : alertTimestampsToRemove) {
                 medicationViewModel.removeAlertTimestamp(alertTimestamp);
             }
 
             Medication medication = new Medication(
-                    mnameEditText.getText().toString(),
-                    mdescriptionEditText.getText().toString()
+                mnameEditText.getText().toString(),
+                mdescriptionEditText.getText().toString()
             );
 
             if (fetchedMedicationId != -1) {
+                // If Medication already exists in DB.
                 medication.medicationId = fetchedMedicationId;
                 medicationViewModel.update(medication, alertTimestamps);
             } else {
+                // If Medication is a new one.
                 medicationViewModel.insert(medication, alertTimestamps);
+
+                for (Calendar calendar : MedicationWithAlertTimestamps.generateCalendars(alertTimestamps)) {
+                    Log.d(TAG, "onOptionsItemSelected: " + calendar.getTimeInMillis());
+
+                    PendingIntent pendingIntent = AlarmUtils.createPendingIntent(this, medication, calendar.getTimeInMillis());
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent);
+                }
             }
 
             finish();
@@ -147,6 +166,7 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
 
+                // TODO: test if alerttimestamp is persisted.
                 int removePosition = alertTimestampsToRemove.size();
                 alertTimestampsToRemove.add(removePosition, alertTimestamps.get(position));
 

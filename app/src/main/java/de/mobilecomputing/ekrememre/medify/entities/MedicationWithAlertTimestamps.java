@@ -64,4 +64,25 @@ public class MedicationWithAlertTimestamps {
 
         return alerts.get(0);
     }
+
+    public static ArrayList<Calendar> generateCalendars(List<AlertTimestamp> alertTimestamps) {
+        ArrayList<Calendar> calendars = new ArrayList<>();
+
+        for (AlertTimestamp alertTimestamp : alertTimestamps) {
+            calendars.addAll(alertTimestamp.getCalendars());
+        }
+
+        calendars.sort((item1, item2) -> {
+            if (item1.equals(item2)) {
+                return 0;
+            }
+            if (item1.before(item2)) {
+                return -1;
+            } else {
+                return 1;
+            }
+        });
+
+        return calendars;
+    }
 }

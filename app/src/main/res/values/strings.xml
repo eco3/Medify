@@ -25,4 +25,6 @@
     <string name="alerttimestamps_empty_warning">Please add an alert.</string>
     <string name="next_alarm">Next alarm</string>
     <string name="at">at</string>
+
+    <string name="channel_name">Medication reminder</string>
 </resources>
