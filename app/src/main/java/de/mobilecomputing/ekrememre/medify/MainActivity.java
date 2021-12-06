@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickAddMedication(View view) {
         Intent intent = new Intent(this, MedicationEditActivity.class);
-
         startActivity(intent);
     }
 }
