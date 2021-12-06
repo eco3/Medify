@@ -1,6 +1,7 @@
 package de.mobilecomputing.ekrememre.medify.entities;
 
 import android.icu.util.Calendar;
+import android.util.Log;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -10,6 +11,8 @@ import java.util.List;
 
 @Entity(tableName = "alert_timestamp")
 public class AlertTimestamp {
+    private static final String TAG = "AlertTimestamp";
+
     @PrimaryKey(autoGenerate = true)
     public long alertTimestampId;
     public long medicationParentId;
@@ -25,9 +28,15 @@ public class AlertTimestamp {
 
         for (Integer weekday : weekdays) {
             Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
             calendar.set(Calendar.HOUR_OF_DAY, hour);
             calendar.set(Calendar.MINUTE, minute);
             calendar.set(Calendar.DAY_OF_WEEK, weekday);
+
+            // Check if set timestamp is before now, else add a 7 days onto it.
+            if(calendar.before(Calendar.getInstance())) {
+                calendar.add(Calendar.DAY_OF_MONTH, 7);
+            }
 
             timestamps.add(calendar.getTimeInMillis());
         }
