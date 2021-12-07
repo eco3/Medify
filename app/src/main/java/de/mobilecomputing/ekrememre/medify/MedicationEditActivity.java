@@ -105,7 +105,10 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
 
             // Persist removing all removed AlertTimestamps.
             for (AlertTimestamp alertTimestamp : alertTimestampsToRemove) {
-                medicationViewModel.removeAlertTimestamp(alertTimestamp);
+                // Check if AlertTimestamp is persisted, only then remove it from DB.
+                if (alertTimestamp.alertTimestampId > 0) {
+                    medicationViewModel.removeAlertTimestamp(alertTimestamp);
+                }
             }
 
             Medication medication = new Medication(
@@ -151,7 +154,6 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
 
-                // TODO: test if alerttimestamp is persisted.
                 int removePosition = alertTimestampsToRemove.size();
                 alertTimestampsToRemove.add(removePosition, alertTimestamps.get(position));
 
