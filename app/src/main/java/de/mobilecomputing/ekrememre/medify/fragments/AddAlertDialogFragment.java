@@ -46,6 +46,7 @@ public class AddAlertDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.alerttime_dialog, null);
+        // TODO: Fix this (R.layout.alerttime_dialog) layout
 
         mtimePicker = (TimePicker) view.findViewById(R.id.timepicker);
         mmondayCheckbox = (CheckBox) view.findViewById(R.id.monday_checkBox);
