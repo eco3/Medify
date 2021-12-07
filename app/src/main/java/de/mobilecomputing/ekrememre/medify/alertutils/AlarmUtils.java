@@ -26,8 +26,15 @@ public class AlarmUtils {
         Log.d(TAG, "createPendingIntent: timestamp: " +  timestamp + " - uniqueID: " + uniqueID);
 
         if (medication == null) {
+            // If we are canceling an alarm.
             flag = PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT;
+        } else if(medication.medicationId > 0)  {
+            // If we are updating an alarm.
+            flag = PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT;
+            intent.putExtra(MedicationAlertReceiver.EXTRA_NOTIFICATION_ID, uniqueID);
+            intent.putExtra(MedicationAlertReceiver.EXTRA_NOTIFICATION, getNotification(context, medication, timestamp));
         } else {
+            // If we are creating an alarm.
             intent.putExtra(MedicationAlertReceiver.EXTRA_NOTIFICATION_ID, uniqueID);
             intent.putExtra(MedicationAlertReceiver.EXTRA_NOTIFICATION, getNotification(context, medication, timestamp));
         }
@@ -40,7 +47,7 @@ public class AlarmUtils {
             Calendar tmpCalendar = Calendar.getInstance();
             tmpCalendar.setTimeInMillis(timestamp);
             String tmpString1 = " - " + tmpCalendar.get(Calendar.HOUR_OF_DAY) + ":" + tmpCalendar.get(Calendar.MINUTE);
-            String tmString2 = " - (" + (int)timestamp + ") | (" + Math.abs((int)timestamp) + ")";
+            String tmString2 = " - (id: " + Math.abs((int)timestamp) + ")";
         // TODO: REMOVE
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)

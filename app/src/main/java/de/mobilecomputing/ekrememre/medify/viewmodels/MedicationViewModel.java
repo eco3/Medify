@@ -5,11 +5,11 @@ import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.icu.util.Calendar;
-import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -46,34 +46,38 @@ public class MedicationViewModel extends AndroidViewModel {
     public void insert(Medication medication, List<AlertTimestamp> alertTimestamps) {
         medicationRepository.insert(medication, alertTimestamps);
 
-        for (Calendar calendar : MedicationWithAlertTimestamps.generateCalendars(alertTimestamps)) {
-            PendingIntent pendingIntent = AlarmUtils.createPendingIntent(
-                    getApplication().getApplicationContext(),
-                    medication,
-                    calendar.getTimeInMillis()
-            );
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent);
-        }
+        dispatchAlarms(medication, MedicationWithAlertTimestamps.generateCalendars(alertTimestamps), false);
     }
 
     public void update(Medication medication, List<AlertTimestamp> alertTimestamps) {
         medicationRepository.update(medication, alertTimestamps);
+
+        dispatchAlarms(medication, MedicationWithAlertTimestamps.generateCalendars(alertTimestamps), false);
     }
 
     public void removeAlertTimestamp(AlertTimestamp alertTimestamp) {
-        for (Calendar calendar : alertTimestamp.getCalendars()) {
-            PendingIntent pendingIntent = AlarmUtils.createPendingIntent(
-                    getApplication().getApplicationContext(),
-                    null,
-                    calendar.getTimeInMillis()
-            );
-            alarmManager.cancel(pendingIntent);
-        }
+        dispatchAlarms(null, alertTimestamp.getCalendars(), true);
 
         medicationRepository.removeAlertTimestamp(alertTimestamp);
     }
 
     public void insertAlertTimestamp(AlertTimestamp alertTimestamp) {
         medicationRepository.insertAlertTimestamp(alertTimestamp);
+    }
+
+    private void dispatchAlarms(Medication medication, ArrayList<Calendar> calendars, boolean isCancel) {
+        for (Calendar calendar : calendars) {
+            PendingIntent pendingIntent = AlarmUtils.createPendingIntent(
+                    getApplication().getApplicationContext(),
+                    medication,
+                    calendar.getTimeInMillis()
+            );
+
+            if (isCancel) {
+                alarmManager.cancel(pendingIntent);
+            } else {
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent);
+            }
+        }
     }
 }
