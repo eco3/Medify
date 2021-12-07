@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -67,9 +68,9 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
                 mnameEditText.setText(fetchedMedication.getMedication().getName());
                 mdescriptionEditText.setText(fetchedMedication.getMedication().getDescription());
                 alertTimestamps = fetchedMedication.getAlertTimestamps();
-            } catch (ExecutionException | InterruptedException e) {
+            } catch (ExecutionException | InterruptedException | NullPointerException e) {
                 e.printStackTrace();
-                // TODO: add feedback.
+                Toast.makeText(getApplicationContext(), R.string.db_fetching_error, Toast.LENGTH_LONG).show();
                 finish();
             }
         }
