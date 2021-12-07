@@ -56,11 +56,17 @@ public class MedicationRepository {
         });
     }
 
-    public void removeAlertTimestamp(AlertTimestamp alertTimestamp) {
-        MedicationDatabase.databaseWriteExecutor.execute(() -> medicationDao.deleteAlertTimestamp(alertTimestamp));
+    public void remove(MedicationWithAlertTimestamps medicationWithAlertTimestamps) {
+        MedicationDatabase.databaseWriteExecutor.execute(() -> {
+            for (AlertTimestamp alertTimestamp : medicationWithAlertTimestamps.getAlertTimestamps()) {
+                medicationDao.deleteAlertTimestamp(alertTimestamp);
+            }
+
+            medicationDao.deleteMedication(medicationWithAlertTimestamps.getMedication());
+        });
     }
 
-    public void insertAlertTimestamp(AlertTimestamp alertTimestamp) {
-        MedicationDatabase.databaseWriteExecutor.execute(() -> medicationDao.insertAlertTimestamp(alertTimestamp));
+    public void removeAlertTimestamp(AlertTimestamp alertTimestamp) {
+        MedicationDatabase.databaseWriteExecutor.execute(() -> medicationDao.deleteAlertTimestamp(alertTimestamp));
     }
 }

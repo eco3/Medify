@@ -5,9 +5,13 @@
     <string name="hint_description">Description</string>
     <string name="alerts">Alerts</string>
 
+    <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
     <string name="edit">Edit</string>
+
+    <string name="remove_medication_title">Removing medication</string>
+    <string name="remove_medication">Do you really want do remove this medication?</string>
 
     <string name="weekday_monday">Mon</string>
     <string name="weekday_tuesday">Tue</string>

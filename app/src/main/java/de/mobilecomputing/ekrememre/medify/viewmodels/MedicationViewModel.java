@@ -55,14 +55,16 @@ public class MedicationViewModel extends AndroidViewModel {
         dispatchAlarms(medication, MedicationWithAlertTimestamps.generateCalendars(alertTimestamps), false);
     }
 
+    public void remove(MedicationWithAlertTimestamps medicationToRemove) {
+        dispatchAlarms(medicationToRemove.getMedication(), medicationToRemove.getCalendars(), true);
+
+        medicationRepository.remove(medicationToRemove);
+    }
+
     public void removeAlertTimestamp(AlertTimestamp alertTimestamp) {
         dispatchAlarms(null, alertTimestamp.getCalendars(), true);
 
         medicationRepository.removeAlertTimestamp(alertTimestamp);
-    }
-
-    public void insertAlertTimestamp(AlertTimestamp alertTimestamp) {
-        medicationRepository.insertAlertTimestamp(alertTimestamp);
     }
 
     private void dispatchAlarms(Medication medication, ArrayList<Calendar> calendars, boolean isCancel) {

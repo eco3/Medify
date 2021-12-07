@@ -34,14 +34,14 @@ public interface MedicationDao {
     MedicationWithAlertTimestamps getMedicationWithAlertTimestamps(long id);
 
     @Transaction
+    @Delete
+    void deleteMedication(Medication medication);
+
+    @Transaction
     @Update
     void updateMedication(Medication medication);
 
     @Transaction
     @Delete
     void deleteAlertTimestamp(AlertTimestamp alertTimestamp);
-
-    @Transaction
-    @Insert
-    void insertAlertTimestamp(AlertTimestamp alertTimestamp);
 }
