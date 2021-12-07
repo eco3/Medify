@@ -3,13 +3,16 @@ package de.mobilecomputing.ekrememre.medify.fragments;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -41,7 +44,6 @@ public class AddAlertDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.alerttime_dialog, null);
 
@@ -57,18 +59,24 @@ public class AddAlertDialogFragment extends DialogFragment {
         mtimePicker.setIs24HourView(true);
         setWeekdayCheckbox();
 
-        builder.setView(view)
-            .setPositiveButton(R.string.save, (dialog, id) -> {
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).setView(view)
+            .setPositiveButton(R.string.save, null)
+            .setNegativeButton(R.string.cancel, (dialog, id) -> dialog.dismiss())
+            .create();
+
+        alertDialog.setOnShowListener(dialog -> {
+            Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+            button.setOnClickListener(v -> {
                 if (getWeekdays().isEmpty()) {
-                    // TODO: create feedback, if no weekdays were checked.
-                    // Snackbar.make(view, R.string.weekday_empty_warning, Snackbar.LENGTH_LONG).show();
+                    Toast.makeText(view.getContext(), R.string.weekday_empty_warning, Toast.LENGTH_LONG).show();
                 } else {
                     listener.onDialogPositiveClick(mtimePicker.getHour(), mtimePicker.getMinute(), getWeekdays());
+                    dialog.dismiss();
                 }
-            })
-            .setNegativeButton(R.string.cancel, (dialog, id) -> dialog.dismiss());
+            });
+        });
 
-        return builder.create();
+        return alertDialog;
     }
 
     @Override
