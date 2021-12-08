@@ -203,10 +203,17 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
                     public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                         Log.d(TAG, "onResponse: " + response.body());
 
-                        //TODO: handle errors.
-                        EanResponseParser.Product product = EanResponseParser.parse(response.body());
+                        if (response.body() == null) {
+                            Toast.makeText(getApplicationContext(), R.string.ean_error, Toast.LENGTH_LONG).show();
+                        } else {
+                            EanResponseParser.Product product = EanResponseParser.parse(response.body());
 
-                        mnameEditText.setText(product.name);
+                            if (product.error == 0) {
+                                mnameEditText.setText(product.name);
+                            } else {
+                                Toast.makeText(getApplicationContext(), R.string.ean_error, Toast.LENGTH_LONG).show();
+                            }
+                        }
 
                         loadingDialog.dismisDialog();
                     }
@@ -215,6 +222,7 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
                     public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
                         call.cancel();
 
+                        Toast.makeText(getApplicationContext(), R.string.internet_error, Toast.LENGTH_LONG).show();
                         loadingDialog.dismisDialog();
                     }
                 });

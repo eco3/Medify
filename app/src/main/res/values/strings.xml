@@ -16,6 +16,8 @@
     <string name="remove_medication">Do you really want do remove this medication?</string>
 
     <string name="db_fetching_error">There was an error fetching the medication.</string>
+    <string name="ean_error">Can\'t fetch the product name.</string>
+    <string name="internet_error">Please establish an internet connection.</string>
 
     <string name="weekday_monday">Mon</string>
     <string name="weekday_tuesday">Tue</string>
