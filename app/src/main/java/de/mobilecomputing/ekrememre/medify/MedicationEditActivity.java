@@ -21,16 +21,21 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import de.mobilecomputing.ekrememre.medify.eanapi.EanApiClient;
+import de.mobilecomputing.ekrememre.medify.eanapi.EanApi;
+import de.mobilecomputing.ekrememre.medify.eanapi.EanResponseParser;
 import de.mobilecomputing.ekrememre.medify.entities.AlertTimestamp;
 import de.mobilecomputing.ekrememre.medify.entities.Medication;
 import de.mobilecomputing.ekrememre.medify.entities.MedicationWithAlertTimestamps;
 import de.mobilecomputing.ekrememre.medify.fragments.AddAlertDialogFragment;
 import de.mobilecomputing.ekrememre.medify.recyclerviews.AlertsViewAdapter;
 import de.mobilecomputing.ekrememre.medify.viewmodels.MedicationViewModel;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MedicationEditActivity extends AppCompatActivity implements AddAlertDialogFragment.AddAlertDialogListener {
     private static final String TAG = "MedicationEditActivity";
@@ -184,8 +189,27 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
         if (requestCode == BARCODE_SCAN_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 String barcodeResult = data.getStringExtra(BarcodeScanActivity.EXTRA_BARCODE_RESULT);
-
                 Log.d(TAG, "onActivityResult: scanned barcode: " + barcodeResult);
+
+                EanApi eanApi = EanApiClient.getClient(EanApi.class);
+
+                eanApi.getProduct(barcodeResult).enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        Log.d(TAG, "onResponse: " + response.body());
+
+                        //TODO: handle errors.
+                        EanResponseParser.Product product = EanResponseParser.parse(response.body());
+
+                        mnameEditText.setText(product.name);
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        call.cancel();
+                    }
+                });
+
             }
         }
     }
