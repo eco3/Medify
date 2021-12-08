@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -33,6 +34,7 @@ import de.mobilecomputing.ekrememre.medify.viewmodels.MedicationViewModel;
 
 public class MedicationEditActivity extends AppCompatActivity implements AddAlertDialogFragment.AddAlertDialogListener {
     private static final String TAG = "MedicationEditActivity";
+    static final int BARCODE_SCAN_REQUEST_CODE = 0;
 
     private EditText mnameEditText;
     private EditText mdescriptionEditText;
@@ -168,5 +170,23 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
                     }).show();
             }
         });
+    }
+
+    public void onScanBarcode(View view) {
+        Intent intent = new Intent(this, BarcodeScanActivity.class);
+        //noinspection deprecation
+        startActivityForResult(intent, BARCODE_SCAN_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == BARCODE_SCAN_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                String barcodeResult = data.getStringExtra(BarcodeScanActivity.EXTRA_BARCODE_RESULT);
+
+                Log.d(TAG, "onActivityResult: scanned barcode: " + barcodeResult);
+            }
+        }
     }
 }
