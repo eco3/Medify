@@ -2,6 +2,7 @@ package de.mobilecomputing.ekrememre.medify;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -16,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -31,6 +33,7 @@ import de.mobilecomputing.ekrememre.medify.entities.AlertTimestamp;
 import de.mobilecomputing.ekrememre.medify.entities.Medication;
 import de.mobilecomputing.ekrememre.medify.entities.MedicationWithAlertTimestamps;
 import de.mobilecomputing.ekrememre.medify.fragments.AddAlertDialogFragment;
+import de.mobilecomputing.ekrememre.medify.fragments.LoadingDialog;
 import de.mobilecomputing.ekrememre.medify.recyclerviews.AlertsViewAdapter;
 import de.mobilecomputing.ekrememre.medify.viewmodels.MedicationViewModel;
 import retrofit2.Call;
@@ -59,8 +62,8 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
 
         mnameEditText = (EditText) findViewById(R.id.name_editText);
         mdescriptionEditText = (EditText) findViewById(R.id.description_editText);
-        medicationViewModel = new ViewModelProvider(this).get(MedicationViewModel.class);
 
+        medicationViewModel = new ViewModelProvider(this).get(MedicationViewModel.class);
         alertTimestampsToRemove = new ArrayList<>();
 
         Intent intent = getIntent();
@@ -191,22 +194,28 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
                 String barcodeResult = data.getStringExtra(BarcodeScanActivity.EXTRA_BARCODE_RESULT);
                 Log.d(TAG, "onActivityResult: scanned barcode: " + barcodeResult);
 
-                EanApi eanApi = EanApiClient.getClient(EanApi.class);
+                LoadingDialog loadingDialog = new LoadingDialog(this);
+                loadingDialog.startDialog();
 
+                EanApi eanApi = EanApiClient.getClient(EanApi.class);
                 eanApi.getProduct(barcodeResult).enqueue(new Callback<String>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
+                    public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                         Log.d(TAG, "onResponse: " + response.body());
 
                         //TODO: handle errors.
                         EanResponseParser.Product product = EanResponseParser.parse(response.body());
 
                         mnameEditText.setText(product.name);
+
+                        loadingDialog.dismisDialog();
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
+                    public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
                         call.cancel();
+
+                        loadingDialog.dismisDialog();
                     }
                 });
 

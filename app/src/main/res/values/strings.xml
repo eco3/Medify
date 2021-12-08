@@ -10,6 +10,7 @@
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
     <string name="edit">Edit</string>
+    <string name="loading">Loading…</string>
 
     <string name="remove_medication_title">Removing medication</string>
     <string name="remove_medication">Do you really want do remove this medication?</string>
