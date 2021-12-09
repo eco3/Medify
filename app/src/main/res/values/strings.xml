@@ -35,4 +35,6 @@
     <string name="alerttimestamps_empty_warning">Please add an alert.</string>
     <string name="next_alarm">Next alarm</string>
     <string name="at">at</string>
+
+    <string name="reminder_text">It\'s time to take %1$s!</string>
 </resources>

@@ -46,19 +46,17 @@ public class AlarmUtils {
         // TODO: REMOVE
             Calendar tmpCalendar = Calendar.getInstance();
             tmpCalendar.setTimeInMillis(timestamp);
-            String tmpString1 = " - " + tmpCalendar.get(Calendar.HOUR_OF_DAY) + ":" + tmpCalendar.get(Calendar.MINUTE);
-            String tmString2 = " - (id: " + Math.abs((int)timestamp) + ")";
+            String tmpString = " - " + String.format("%02d:%02d", tmpCalendar.get(Calendar.HOUR_OF_DAY), tmpCalendar.get(Calendar.MINUTE));
         // TODO: REMOVE
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle(medication.getName() + tmpString1)
-            .setContentText(medication.getDescription() + tmString2)
+            .setSmallIcon(R.drawable.ic_pill)
+            .setContentTitle(context.getString(R.string.reminder_text, medication.getName()))
+            .setContentText(medication.getDescription() + tmpString)
             .setAutoCancel(true)
             .setChannelId(NOTIFICATION_CHANNEL_ID)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setCategory(NotificationCompat.CATEGORY_REMINDER)
-        ;
+            .setCategory(NotificationCompat.CATEGORY_REMINDER);
 
         return builder.build();
     }
