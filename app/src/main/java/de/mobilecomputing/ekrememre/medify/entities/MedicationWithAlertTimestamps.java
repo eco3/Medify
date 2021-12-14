@@ -32,29 +32,16 @@ public class MedicationWithAlertTimestamps {
     }
 
     public ArrayList<Calendar> getCalendars() {
-        ArrayList<Calendar> calendars = new ArrayList<>();
-
-        for (AlertTimestamp alertTimestamp : alertTimestamps) {
-            calendars.addAll(alertTimestamp.getCalendars());
-        }
-
-        calendars.sort((item1, item2) -> {
-            if (item1.equals(item2)) {
-                return 0;
-            }
-            if (item1.before(item2)) {
-                return -1;
-            } else {
-                return 1;
-            }
-        });
-
-        return calendars;
+        return getCalendars(alertTimestamps);
     }
 
     public Calendar getNextAlarm() {
+        return getNextAlarm(alertTimestamps);
+    }
+
+    public static Calendar getNextAlarm(List<AlertTimestamp> alertTimestamps) {
         Calendar now = Calendar.getInstance();
-        ArrayList<Calendar> alerts = getCalendars();
+        ArrayList<Calendar> alerts = getCalendars(alertTimestamps);
 
         for (Calendar alert : alerts) {
             if (now.before(alert)) {
@@ -65,7 +52,7 @@ public class MedicationWithAlertTimestamps {
         return alerts.get(0);
     }
 
-    public static ArrayList<Calendar> generateCalendars(List<AlertTimestamp> alertTimestamps) {
+    public static ArrayList<Calendar> getCalendars(List<AlertTimestamp> alertTimestamps) {
         ArrayList<Calendar> calendars = new ArrayList<>();
 
         for (AlertTimestamp alertTimestamp : alertTimestamps) {

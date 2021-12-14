@@ -22,9 +22,9 @@ import de.mobilecomputing.ekrememre.medify.entities.MedicationWithAlertTimestamp
 public class MedicationViewModel extends AndroidViewModel {
     private static final String TAG = "MedicationViewModel";
 
-    private AlarmManager alarmManager;
+    private final AlarmManager alarmManager;
 
-    private MedicationRepository medicationRepository;
+    private final MedicationRepository medicationRepository;
     private final LiveData<List<MedicationWithAlertTimestamps>> medications;
 
     public MedicationViewModel(Application application) {
@@ -46,13 +46,13 @@ public class MedicationViewModel extends AndroidViewModel {
     public void insert(Medication medication, List<AlertTimestamp> alertTimestamps) {
         medicationRepository.insert(medication, alertTimestamps);
 
-        dispatchAlarms(medication, MedicationWithAlertTimestamps.generateCalendars(alertTimestamps), false);
+        dispatchAlarms(medication, MedicationWithAlertTimestamps.getCalendars(alertTimestamps), false);
     }
 
     public void update(Medication medication, List<AlertTimestamp> alertTimestamps) {
         medicationRepository.update(medication, alertTimestamps);
 
-        dispatchAlarms(medication, MedicationWithAlertTimestamps.generateCalendars(alertTimestamps), false);
+        dispatchAlarms(medication, MedicationWithAlertTimestamps.getCalendars(alertTimestamps), false);
     }
 
     public void remove(MedicationWithAlertTimestamps medicationToRemove) {
