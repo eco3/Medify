@@ -69,7 +69,6 @@ public class MedicationsDiffCallback extends DiffUtil.Callback {
             }
         }
 
-
         return id && name && description && timestamps && timestampsIds && medicationParentIds && alerts;
     }
 }
