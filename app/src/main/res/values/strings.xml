@@ -11,6 +11,7 @@
     <string name="save">Save</string>
     <string name="edit">Edit</string>
     <string name="loading">Loading…</string>
+    <string name="settings">Settings</string>
 
     <string name="remove_medication_title">Removing medication</string>
     <string name="remove_medication">Do you really want do remove this medication?</string>
@@ -37,4 +38,6 @@
     <string name="at">at</string>
 
     <string name="reminder_text">It\'s time to take %1$s!</string>
+    <string name="camera_permission">To use the Barcode Scanner you must permit the app to use your camera.</string>
+    <string name="camera_denied">You\'ve denied the camera-permission that the app needs for the Barcode Scanner. You\'ve denied a permission that the app needs for core functionality.</string>
 </resources>
