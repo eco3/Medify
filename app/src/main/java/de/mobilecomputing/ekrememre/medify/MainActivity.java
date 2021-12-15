@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import de.mobilecomputing.ekrememre.medify.recyclerviews.MedicationsViewAdapter;
 import de.mobilecomputing.ekrememre.medify.viewmodels.MedicationViewModel;
@@ -24,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
     private MedicationsViewAdapter medicationsViewAdapter;
     private MedicationViewModel medicationViewModel;
 
+    private RecyclerView medicationRecyclerView;
+    private TextView noMedicationsTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,13 +35,18 @@ public class MainActivity extends AppCompatActivity {
 
         medicationsViewAdapter = new MedicationsViewAdapter();
         medicationViewModel = new ViewModelProvider(this).get(MedicationViewModel.class);
-        RecyclerView medicationRecyclerView = findViewById(R.id.medication_recycler_view);
+
+        medicationRecyclerView = findViewById(R.id.medication_recycler_view);
+        noMedicationsTextView = findViewById(R.id.no_medication_textview);
 
         medicationRecyclerView.setHasFixedSize(true);
         medicationRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         medicationRecyclerView.setAdapter(medicationsViewAdapter);
 
-        medicationViewModel.getAllMedications().observe(this, medicationsViewAdapter::updateData);
+        medicationViewModel.getAllMedications().observe(this, newMedications -> {
+            medicationsViewAdapter.updateData(newMedications);
+            checkEmpty();
+        });
 
         onMedicationSwipe().attachToRecyclerView(medicationRecyclerView);
     }
@@ -59,14 +68,24 @@ public class MainActivity extends AppCompatActivity {
                 int position = viewHolder.getAdapterPosition();
 
                 AlertDialog alertDialog = new AlertDialog.Builder(viewHolder.itemView.getContext())
-                    .setPositiveButton(R.string.ok, (dialog, id) -> medicationViewModel.remove(medicationsViewAdapter.getMedicationAtPosition(position)))
-                    .setNegativeButton(R.string.cancel, (dialog, id) -> medicationsViewAdapter.notifyItemChanged(position))
-                    .setMessage(R.string.remove_medication)
-                    .setTitle(R.string.remove_medication_title)
-                    .create();
+                        .setPositiveButton(R.string.ok, (dialog, id) -> medicationViewModel.remove(medicationsViewAdapter.getMedicationAtPosition(position)))
+                        .setNegativeButton(R.string.cancel, (dialog, id) -> medicationsViewAdapter.notifyItemChanged(position))
+                        .setMessage(R.string.remove_medication)
+                        .setTitle(R.string.remove_medication_title)
+                        .create();
 
                 alertDialog.show();
             }
         });
+    }
+
+    private void checkEmpty() {
+        if (medicationsViewAdapter.getItemCount() == 0) {
+            noMedicationsTextView.setVisibility(View.VISIBLE);
+            medicationRecyclerView.setVisibility(View.GONE);
+        } else {
+            noMedicationsTextView.setVisibility(View.GONE);
+            medicationRecyclerView.setVisibility(View.VISIBLE);
+        }
     }
 }

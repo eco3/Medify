@@ -40,4 +40,5 @@
     <string name="reminder_text">It\'s time to take %1$s!</string>
     <string name="camera_permission">To use the Barcode Scanner you must permit the app to use your camera.</string>
     <string name="camera_denied">You\'ve denied the camera-permission that the app needs for the Barcode Scanner. You\'ve denied a permission that the app needs for core functionality.</string>
+    <string name="no_medication_hint">No medications are recorded.\nAdd some by touching the button at the bottom.</string>
 </resources>

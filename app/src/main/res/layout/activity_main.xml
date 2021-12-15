@@ -6,10 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/no_medication_textview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/no_medication_hint"
+        android:textColor="#EF6C00"
+        android:visibility="gone"
+        android:textSize="20sp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/medication_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="visible"
         android:layout_margin="8dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -19,7 +30,6 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="16dp"
-        android:contentDescription="TODO"
         android:onClick="onClickAddMedication"
         app:srcCompat="@drawable/ic_baseline_add_48" />
 
