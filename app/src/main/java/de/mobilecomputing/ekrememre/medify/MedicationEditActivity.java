@@ -149,7 +149,6 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
 
     @Override
     public void onDialogPositiveClick(Integer hour, Integer minute, List<Integer> weekdays) {
-        // TODO: Sort this list
         alertTimestamps.add(new AlertTimestamp(hour, minute, weekdays));
         malertsViewAdapter.notifyItemInserted(alertTimestamps.size());
     }
