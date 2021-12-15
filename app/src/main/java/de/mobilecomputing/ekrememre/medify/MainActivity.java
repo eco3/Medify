@@ -8,15 +8,11 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.google.android.material.snackbar.Snackbar;
-
-import de.mobilecomputing.ekrememre.medify.entities.MedicationWithAlertTimestamps;
 import de.mobilecomputing.ekrememre.medify.recyclerviews.MedicationsViewAdapter;
 import de.mobilecomputing.ekrememre.medify.viewmodels.MedicationViewModel;
 
@@ -62,13 +58,8 @@ public class MainActivity extends AppCompatActivity {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
 
-                MedicationWithAlertTimestamps medicationToRemove = medicationsViewAdapter.getMedications().get(position);
-
                 AlertDialog alertDialog = new AlertDialog.Builder(viewHolder.itemView.getContext())
-                    .setPositiveButton(R.string.ok, (dialog, id) -> {
-                        medicationViewModel.remove(medicationToRemove);
-                        medicationsViewAdapter.notifyItemRemoved(position);
-                    })
+                    .setPositiveButton(R.string.ok, (dialog, id) -> medicationViewModel.remove(medicationsViewAdapter.getMedicationAtPosition(position)))
                     .setNegativeButton(R.string.cancel, (dialog, id) -> medicationsViewAdapter.notifyItemChanged(position))
                     .setMessage(R.string.remove_medication)
                     .setTitle(R.string.remove_medication_title)

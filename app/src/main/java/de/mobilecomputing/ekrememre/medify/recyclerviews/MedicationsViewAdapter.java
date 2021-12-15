@@ -111,9 +111,11 @@ public class MedicationsViewAdapter extends RecyclerView.Adapter<MedicationsView
         this.medications.clear();
         this.medications.addAll(newMedications);
         diffResult.dispatchUpdatesTo(this);
+
+        this.notifyDataSetChanged();
     }
 
-    public List<MedicationWithAlertTimestamps> getMedications() {
-        return medications;
+    public MedicationWithAlertTimestamps getMedicationAtPosition(int position) {
+        return medications.get(position);
     }
 }

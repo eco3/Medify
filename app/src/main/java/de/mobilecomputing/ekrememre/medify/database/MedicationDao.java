@@ -18,7 +18,7 @@ import de.mobilecomputing.ekrememre.medify.entities.MedicationWithAlertTimestamp
 @Dao
 public interface MedicationDao {
     @Transaction
-    @Query("SELECT * FROM medication")
+    @Query("SELECT * FROM medication ORDER BY name ASC")
     LiveData<List<MedicationWithAlertTimestamps>> getMedicationsWithAlertTimestamps();
 
     @Transaction
