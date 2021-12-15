@@ -23,7 +23,7 @@ public class AlarmUtils {
         int uniqueID = Math.abs((int)timestamp);
         int flag = PendingIntent.FLAG_IMMUTABLE;
 
-        Log.d(TAG, "createPendingIntent: timestamp: " +  timestamp + " - uniqueID: " + uniqueID);
+        Log.d(TAG, "createPendingIntent: medicationName: '" + (medication == null ? "NULL" : medication.getName()) + "' - timestamp: " +  timestamp + " - uniqueID: " + uniqueID);
 
         if (medication == null) {
             // If we are canceling an alarm.
@@ -46,11 +46,14 @@ public class AlarmUtils {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_pill)
             .setContentTitle(context.getString(R.string.reminder_text, medication.getName()))
-            .setContentText(medication.getDescription())
             .setAutoCancel(true)
             .setChannelId(NOTIFICATION_CHANNEL_ID)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setCategory(NotificationCompat.CATEGORY_REMINDER);
+
+        if (!medication.getDescription().isEmpty()) {
+            builder.setContentText(medication.getDescription());
+        }
 
         return builder.build();
     }
