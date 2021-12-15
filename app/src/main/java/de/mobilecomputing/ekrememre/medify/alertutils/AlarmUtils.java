@@ -32,27 +32,21 @@ public class AlarmUtils {
             // If we are updating an alarm.
             flag = PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT;
             intent.putExtra(MedicationAlertReceiver.EXTRA_NOTIFICATION_ID, uniqueID);
-            intent.putExtra(MedicationAlertReceiver.EXTRA_NOTIFICATION, getNotification(context, medication, timestamp));
+            intent.putExtra(MedicationAlertReceiver.EXTRA_NOTIFICATION, getNotification(context, medication));
         } else {
             // If we are creating an alarm.
             intent.putExtra(MedicationAlertReceiver.EXTRA_NOTIFICATION_ID, uniqueID);
-            intent.putExtra(MedicationAlertReceiver.EXTRA_NOTIFICATION, getNotification(context, medication, timestamp));
+            intent.putExtra(MedicationAlertReceiver.EXTRA_NOTIFICATION, getNotification(context, medication));
         }
 
         return PendingIntent.getBroadcast(context, uniqueID, intent, flag);
     }
 
-    private static Notification getNotification (Context context, Medication medication, long timestamp) {
-        // TODO: REMOVE
-            Calendar tmpCalendar = Calendar.getInstance();
-            tmpCalendar.setTimeInMillis(timestamp);
-            String tmpString = " - " + String.format("%02d:%02d", tmpCalendar.get(Calendar.HOUR_OF_DAY), tmpCalendar.get(Calendar.MINUTE));
-        // TODO: REMOVE
-
+    private static Notification getNotification (Context context, Medication medication) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_pill)
             .setContentTitle(context.getString(R.string.reminder_text, medication.getName()))
-            .setContentText(medication.getDescription() + tmpString)
+            .setContentText(medication.getDescription())
             .setAutoCancel(true)
             .setChannelId(NOTIFICATION_CHANNEL_ID)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
