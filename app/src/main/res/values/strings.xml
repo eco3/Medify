@@ -3,7 +3,7 @@
     <string name="channel_name">Medication reminder</string>
 
     <string name="hint_name">Medication name</string>
-    <string name="hint_description">Description</string>
+    <string name="hint_description">Intake instructions</string>
     <string name="alerts">Alerts</string>
 
     <string name="ok">OK</string>
@@ -28,13 +28,13 @@
     <string name="weekday_saturday">Sat</string>
     <string name="weekday_sunday">Sun</string>
 
-    <string name="add_alert">Add Alert</string>
+    <string name="add_alert">Add alert</string>
 
     <string name="weekday_empty_warning">At least one weekday must be selected.</string>
     <string name="alert_deletion_message">Alert was deleted.</string>
     <string name="medication_name_empty_warning">Please add a medication name.</string>
     <string name="alerttimestamps_empty_warning">Please add an alert.</string>
-    <string name="next_alarm">Next alarm</string>
+    <string name="next_alert">Next alert</string>
     <string name="at">at</string>
 
     <string name="reminder_text">It\'s time to take %1$s!</string>
