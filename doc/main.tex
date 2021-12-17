@@ -1,15 +1,16 @@
 \documentclass[conference]{IEEEtran}
 \IEEEoverridecommandlockouts
-% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
 \usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts}
-\usepackage{algorithmic}
 \usepackage{textcomp}
 \usepackage{xcolor}
 \usepackage{enumitem}
 \usepackage{calc}
-\usepackage{graphicx}
+\usepackage{float}
 \usepackage[colorlinks=true,urlcolor=blue,linkcolor=green]{hyperref}
+\usepackage{graphicx,svg}
+\svgsetup{inkscapelatex=false,inkscapepath=./build/svg-inkscape}
+\svgpath{{images/}}
 \graphicspath{{images/}}
 
 \usepackage{lipsum}
@@ -30,12 +31,14 @@ ek741emr@htwg-konstanz.de}
 \maketitle
 
 \begin{abstract}
-\lipsum[1][1-4]
+\lipsum[1][1-4] %TODO
 \end{abstract}
 
 \section{Introduction}
+\lipsum[2][1-10] %TODO
 
 \section{Goal of the project}
+\lipsum[3][1-13] %TODO
 
 \section{Requirement analysis}
 
@@ -44,7 +47,7 @@ To simulate users for this application, two personas were created, which represe
 that might us this application.
 
 \subsubsection{First persona} \hfill
-\begin{figure}[htbp]
+\begin{figure}[h]
 	\centerline{\includegraphics[width=.5\linewidth]{images/persona01.jpg}}
 	\caption[Portrait of the persona Rosalyn Foster; Source taken from \cite{personaimg}]
 	{\tabular[t]{@{}l@{}}Portrait of the persona Rosalyn Foster.\\ Source taken from \cite{personaimg}\endtabular}
@@ -77,7 +80,7 @@ that might us this application.
 As an older person, Rosalyn wants to be reminded to take her medicine, because she forgets them and wants to get healthy.
 
 \subsubsection{Second persona} \hfill
-\begin{figure}[htbp]
+\begin{figure}[h]
 	\centerline{\includegraphics[width=.5\linewidth]{images/persona02.jpg}}
 	\caption[Portrait of the persona Christian Metz; Source taken from \cite{personaimg}]
 	{\tabular[t]{@{}l@{}}Portrait of the persona Christian Metz.\\ Source taken from \cite{personaimg}\endtabular}
@@ -114,8 +117,7 @@ These personas show a user group, which are in need to take medication. However 
 remind themselves to take them in their daily lives.
 
 \subsection{Storyboards}
-
-\begin{figure*}[ht]
+\begin{figure*}
 	\includegraphics[width=\linewidth]{images/storyboard01.png}
 	\caption
 	{Storyboard showing an elderly person on her daily activities.
@@ -126,7 +128,7 @@ remind themselves to take them in their daily lives.
 	\label{fig:storyboard1}
 \end{figure*}
 
-\begin{figure*}[ht]
+\begin{figure*}
 	\includegraphics[width=\textwidth]{images/storyboard02.png}
 	\caption
 	{Storyboard showing an elderly person on her daily activities while using a medication reminder application.
@@ -143,19 +145,45 @@ routine forgets to take her medicine.
 Fig. \ref{fig:storyboard2} shows the same elderly person in a similar scenario. In order to manage
 her medication, she uses her smartphone to get reminded when to take her medicine.
 
+\subsection{Summary}
+The requirement analysis shows, that the application must be capable of reminding the user when to take
+their medicine. The time of notification shall be set by the user. In order to accommodate users who need
+to take different medications at different points in time, the application shall be able to record multiple
+medications with multiple alerts.
 
+In order to facilitate the usage of the application, it shall include a way to scan GTIN/EAN--labels and
+autonomously recognize the name of the scanned medication.
 
 \section{Conceptual model of the solution}
 
 \subsection{Entity relationship diagram}
 
+\begin{figure}[H]
+	\centerline{\includesvg[width=0.9\linewidth]{entity_relationship_diagram}}
+	\caption{TODO}
+	\label{fig:entity_relationship_diagram}
+\end{figure}
+
 \subsection{Activity diagram}
+
+\begin{figure}[H]
+	\centerline{\includesvg[width=\linewidth]{activity_diagram}}
+	\caption{TODO}
+	\label{fig:activity_diagram}
+\end{figure}
+
 
 \subsection{Mockup}
 
 \section{Design decisions}
 
 \subsection{UML diagram}
+
+\begin{figure}[H]
+	\centerline{\includesvg[width=0.7\linewidth]{uml_diagram}}
+	\caption{TODO}
+	\label{fig:uml_diagram}
+\end{figure}
 
 \section{Results}
 
