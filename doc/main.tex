@@ -159,40 +159,70 @@ autonomously recognize the name of the scanned medication.
 \subsection{Entity relationship diagram}
 
 \begin{figure}[H]
-	\centerline{\includesvg[width=0.9\linewidth]{entity_relationship_diagram}}
-	\caption{TODO}
+	\centerline{\includesvg[width=\linewidth]{entity_relationship_diagram}}
+	\caption{Entity relationship diagram to depict the data model.}
 	\label{fig:entity_relationship_diagram}
 \end{figure}
+
+Fig. \ref{fig:entity_relationship_diagram} shows a entity relationship diagram of the application.
+Two entities emerged when designing a first solution. \texttt{Medication} has the attributes \texttt{name},
+\texttt{description} and a \texttt{1:n} relationship to \texttt{AlertTimestamp}, which has \texttt{timestamps}.
+By designing the data model this way, it is possible to have multiple \texttt{Medication}-entries associated with multiple different \texttt{AlertTimestamp}-entries.
 
 \subsection{Activity diagram}
 
 \begin{figure}[H]
 	\centerline{\includesvg[width=\linewidth]{activity_diagram}}
-	\caption{TODO}
+	\caption{Activity diagram showing the main workflow of the application.}
 	\label{fig:activity_diagram}
 \end{figure}
 
+Fig. \ref{fig:activity_diagram} shows the workflow of the application. Beside the basic \textit{CRUD} operations
+to the database, actions for scheduling reminders and fetching data from a remote \textit{API} included. In order
+to keep this diagram plain, the scheduling and \textit{API} actions are deliberately kept simple.
 
-\subsection{Mockup}
-
-\section{Design decisions}
-
-\subsection{UML diagram}
+\subsection{Mockups}
 
 \begin{figure}[H]
-	\centerline{\includesvg[width=0.7\linewidth]{uml_diagram}}
-	\caption{TODO}
-	\label{fig:uml_diagram}
+	\centerline{\includegraphics[width=0.4\linewidth]{images/mockup01}}
+	\caption{Mockup of the main activity.}
+	\label{fig:mockup_main_activity}
 \end{figure}
 
-\section{Results}
+The mockup of the main activity is shown in Fig. \ref{fig:mockup_main_activity}. Every medication entry is
+displayed as a list. The list entries include the names and the next time an alert is triggered. The entries
+are clickable, in order to edit them. Swiping an entry shall remove it. A button at the bottom of the screen
+enables the user to add a new medication entry.
 
-\section{Conclusion}
+\begin{figure}[pb]
+	\centerline{\includegraphics[width=0.45\linewidth]{images/mockup02}}
+	\caption{Mockup of the form activity.}
+	\label{fig:mockup_edit_activity}
+\end{figure}
+
+Fig. \ref{fig:mockup_edit_activity}
+\lipsum[6-7] %TODO
 
 
+%\section{Design decisions}
+%
+%\subsection{UML diagram}
+%
+%\begin{figure}[H]
+%	\centerline{\includesvg[width=0.7\linewidth]{uml_diagram}}
+%	\caption{TODO}
+%	\label{fig:uml_diagram}
+%\end{figure}
+%
+%\section{Results}
+%
+%\section{Conclusion}
+
+\newpage\hfill\newpage %TODO
 \begin{thebibliography}{00}	
 	\bibitem{personaimg} P. Wang, ``This Person Does Not Exist,'' \textit{thispersondoesnotexist.com}, [Online] Available: \url{https://thispersondoesnotexist.com/} [Accessed Dec. 17, 2021].
 	\bibitem{storyboard} Clever Prototypes, LLC, ``Storyboard That,'' \textit{storyboardthat.com}, [Online] Available: \url{https://www.storyboardthat.com/} [Accessed Dec. 17, 2021].
+	
 \end{thebibliography}
 
 \end{document}
