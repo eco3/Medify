@@ -10,8 +10,6 @@
 \usepackage[colorlinks=true,urlcolor=blue,linkcolor=green]{hyperref}
 \usepackage{graphicx,svg}
 \svgsetup{inkscapelatex=false,inkscapepath=./build/svg-inkscape}
-\svgpath{{images/}}
-\graphicspath{{images/}}
 
 \usepackage{lipsum}
 
@@ -158,7 +156,7 @@ autonomously recognize the name of the scanned medication.
 \subsection{Entity relationship diagram}
 
 \begin{figure}[H]
-	\centerline{\includesvg[width=\linewidth]{entity_relationship_diagram}}
+	\centerline{\includesvg[width=\linewidth]{images/entity_relationship_diagram}}
 	\caption{Entity relationship diagram to depict the data model.}
 	\label{fig:entity_relationship_diagram}
 \end{figure}
@@ -171,7 +169,7 @@ By designing the data model this way, it is possible to have multiple \texttt{Me
 \subsection{Activity diagram}
 
 \begin{figure}[H]
-	\centerline{\includesvg[width=\linewidth]{activity_diagram}}
+	\centerline{\includesvg[width=\linewidth]{images/activity_diagram}}
 	\caption{Activity diagram showing the main workflow of the application.}
 	\label{fig:activity_diagram}
 \end{figure}
@@ -220,7 +218,7 @@ In an attempt to realize the data model in Fig. \ref{fig:entity_relationship_dia
 needed to be altered.
 
 \begin{figure}[H]
-	\centerline{\includesvg[width=\linewidth]{uml_diagram}}
+	\centerline{\includesvg[width=\linewidth]{images/uml_diagram}}
 	\caption{UML diagram depicting the data model of the application.}
 	\label{fig:uml_diagram}
 \end{figure}
@@ -283,8 +281,63 @@ selection of a time of day is done by using a \textit{TimePicker} and multiple \
 weekdays. Swiping an \texttt{AlertTimestamp} displays a \textit{Snackbar} with a option to undo the deletion.
 Swiping a \texttt{Medication} prompts an \textit{AlertDialog} with the option to confirm or cancel the deletion.
 
-%\section{Results}
-%
+\section{Results}
+
+This chapter shows the results of the implemented application.
+
+\begin{figure}[H]
+	\centerline{\includegraphics[trim={0 1200px 0 0},clip,width=0.8\linewidth]{images/screenshots/main_activity.png}}
+	\caption{Clipped screenshot of the main activity.}
+	\label{fig:screenshot_main}
+\end{figure}
+
+Fig. \ref{fig:screenshot_main} shows a clipped screenshot of the main activity. Two medications are shown with 
+their corresponding alerts.
+
+\begin{figure}[H]
+	\centerline{\includegraphics[trim={0 720px 0 0},clip,width=0.8\linewidth]{images/screenshots/editing_medication.png}}
+	\caption{Clipped screenshot displaying the activity for editing a medication.}
+	\label{fig:editing_medication}
+\end{figure}
+
+Fig. \ref{fig:editing_medication} is the result, when the list entry ``Vitamin D3'' was clicked. The label
+\textit{Description} was replaced by \textit{Intake instructions} to be more clearer of its usage. As intended the
+selected weekdays are highlighted and the day of time is displayed.
+
+\begin{figure}[H]
+	\centerline{\includegraphics[trim={0 310px 0 250px},clip,width=0.8\linewidth]{images/screenshots/adding_alert.png}}
+	\caption{Clipped screenshot picturing the \textit{AlertDialog} for selecting the alert time.}
+	\label{fig:adding_alert}
+\end{figure}
+
+When pressing the \textit{Add Alert} button in Fig. \ref{fig:editing_medication} the \textit{AlertDialog} from
+Fig. \ref{fig:adding_alert} is presented. Here the user is able to select a day of time and which weekday shall
+include the alert.
+
+If the user presses the lower right button in the activity from Fig. \ref{fig:editing_medication}, which is not
+pictured in the screenshot, the GTIN/EAN--label scanner is started.
+
+\begin{figure}[H]
+	\centerline{\includegraphics[trim={0 400px 0 240px},clip,width=0.8\linewidth]{images/screenshots/barcode_scanning.png}}
+	\caption{Clipped screenshot showing the implemented GTIN/EAN--label scanner.}
+	\label{fig:barcode_scanning}
+\end{figure}
+
+Fig. \ref{fig:barcode_scanning} shows the scanner activity. The button at the upper right toggles the autofocus of
+the camera. The button on the other side toggles the integrated flashlight. As soon as a label is successfully
+scanned the activity finishes and returns to the activity depicted in Fig. \ref{fig:adding_alert} and tries to 
+fill out the medication name.
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=0.8\linewidth]{images/screenshots/notification.png}}
+	\caption{Clipped screenshot showing the alert of the medication.}
+	\label{fig:notification}
+\end{figure}
+
+When a alert takes place, the application emits a notification, which is shown in Fig. \ref{fig:notification}.
+The medication name is shown in the title of the notification, while the intake instructions are shown in the 
+description.
+
 %\section{Conclusion}
 
 \newpage\hfill\newpage %TODO
