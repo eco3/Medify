@@ -15,8 +15,7 @@
 
 \usepackage{lipsum}
 
-\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
-    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
     
 \begin{document}
 
@@ -49,8 +48,8 @@ that might us this application.
 \subsubsection{First persona} \hfill
 \begin{figure}[h]
 	\centerline{\includegraphics[width=.5\linewidth]{images/persona01.jpg}}
-	\caption[Portrait of the persona Rosalyn Foster; Source taken from \cite{personaimg}]
-	{\tabular[t]{@{}l@{}}Portrait of the persona Rosalyn Foster.\\ Source taken from \cite{personaimg}\endtabular}
+	\caption[Portrait of the persona Rosalyn Foster; Source taken from \cite{personaimg}.]
+	{\tabular[t]{@{}l@{}}Portrait of the persona Rosalyn Foster.\\ Source taken from \cite{personaimg}.\endtabular}
 	\label{fig:persona1}
 \end{figure}
 
@@ -82,8 +81,8 @@ As an older person, Rosalyn wants to be reminded to take her medicine, because s
 \subsubsection{Second persona} \hfill
 \begin{figure}[h]
 	\centerline{\includegraphics[width=.5\linewidth]{images/persona02.jpg}}
-	\caption[Portrait of the persona Christian Metz; Source taken from \cite{personaimg}]
-	{\tabular[t]{@{}l@{}}Portrait of the persona Christian Metz.\\ Source taken from \cite{personaimg}\endtabular}
+	\caption[Portrait of the persona Christian Metz; Source taken from \cite{personaimg}.]
+	{\tabular[t]{@{}l@{}}Portrait of the persona Christian Metz.\\ Source taken from \cite{personaimg}.\endtabular}
 	\label{fig:persona2}
 \end{figure}
 
@@ -185,14 +184,14 @@ to keep this diagram plain, the scheduling and \textit{API} actions are delibera
 
 \begin{figure}[H]
 	\centerline{\includegraphics[width=0.4\linewidth]{images/mockup01}}
-	\caption{Mockup of the main activity.}
+	\caption{Mockup of the main activity. Red annotations shall clarify the functionality of the elements.}
 	\label{fig:mockup_main_activity}
 \end{figure}
 
 The mockup of the main activity is shown in Fig. \ref{fig:mockup_main_activity}. Every medication entry is
-displayed as a list. The list entries include the names and the next time an alert is triggered. The entries
-are clickable, in order to edit them. Swiping an entry shall remove it. A button at the bottom of the screen
-enables the user to add a new medication entry.
+displayed in a list. The list entries include the names of the medication and the next time an alert is triggered.
+The entries are clickable, in order to edit them. Swiping an entry shall remove it.
+A button at the bottom of the screen enables the user to add a new medication entry.
 
 \begin{figure}[pb]
 	\centerline{\includegraphics[width=0.45\linewidth]{images/mockup02}}
@@ -200,8 +199,16 @@ enables the user to add a new medication entry.
 	\label{fig:mockup_edit_activity}
 \end{figure}
 
-Fig. \ref{fig:mockup_edit_activity}
-\lipsum[6-7] %TODO
+Fig. \ref{fig:mockup_edit_activity} displays the activity, when a new medication is to be added or an existing
+one was selected to be edited. Two text input fields enables the user to specify the name and a description of 
+the medication. A list is used to show all the alerts of the associated medication. The entries include the time
+in a 24-hour notation and abbreviations of the weekdays. The selected weekdays shall be highlighted. Adding new 
+alerts is handled by clicking a button above the list. Removing existing alerts is done by swiping the list entry.
+Editing existing alerts is not provided. At the lower right part of the screen a floating button enables the user
+to activate the GTIN/EAN--label scanner. A new activity shall start to handle the scanning of the label.
+In order to save the medication entry, a button is presented in the upper right top of the screen. To cancel the
+editing or adding operation, the system wide back-button in the navigation-buttons is to be used.
+
 
 
 %\section{Design decisions}
@@ -221,8 +228,9 @@ Fig. \ref{fig:mockup_edit_activity}
 \newpage\hfill\newpage %TODO
 \begin{thebibliography}{00}	
 	\bibitem{personaimg} P. Wang, ``This Person Does Not Exist,'' \textit{thispersondoesnotexist.com}, [Online] Available: \url{https://thispersondoesnotexist.com/} [Accessed Dec. 17, 2021].
+
 	\bibitem{storyboard} Clever Prototypes, LLC, ``Storyboard That,'' \textit{storyboardthat.com}, [Online] Available: \url{https://www.storyboardthat.com/} [Accessed Dec. 17, 2021].
-	
+
 \end{thebibliography}
 
 \end{document}
