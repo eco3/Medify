@@ -18,6 +18,7 @@
 
     <string name="db_fetching_error">There was an error fetching the medication.</string>
     <string name="ean_error">Can\'t fetch the product name.</string>
+    <string name="ean_empty">Product was not found in the database.</string>
     <string name="internet_error">Please establish an internet connection.</string>
 
     <string name="weekday_monday">Mon</string>

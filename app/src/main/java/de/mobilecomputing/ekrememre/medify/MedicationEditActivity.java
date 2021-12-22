@@ -206,6 +206,10 @@ public class MedicationEditActivity extends AppCompatActivity implements AddAler
                             EanResponseParser.Product product = EanResponseParser.parse(response.body());
 
                             if (product.error == 0) {
+                                if (product.name.isEmpty()) {
+                                    Toast.makeText(getApplicationContext(), R.string.ean_empty, Toast.LENGTH_LONG).show();
+                                }
+
                                 mnameEditText.setText(product.name);
                             } else {
                                 Toast.makeText(getApplicationContext(), R.string.ean_error, Toast.LENGTH_LONG).show();
