@@ -144,7 +144,7 @@ routine forgets to take her medicine.
 Fig. \ref{fig:storyboard2} shows the same elderly person in a similar scenario. In order to manage
 her medication, she uses her smartphone to get reminded when to take her medicine.
 
-\subsection{Summary}
+\subsection{Requirement specification}
 The requirement analysis shows, that the application must be capable of reminding the user when to take
 their medicine. The time of notification shall be set by the user. In order to accommodate users who need
 to take different medications at different points in time, the application shall be able to record multiple
@@ -180,7 +180,7 @@ Fig. \ref{fig:activity_diagram} shows the workflow of the application. Beside th
 to the database, actions for scheduling reminders and fetching data from a remote \textit{API} included. In order
 to keep this diagram plain, the scheduling and \textit{API} actions are deliberately kept simple.
 
-\subsection{Mockups}
+\subsection{Mockups} \label{sec:mockups}
 
 \begin{figure}[H]
 	\centerline{\includegraphics[width=0.4\linewidth]{images/mockup01}}
@@ -276,6 +276,12 @@ calls, the package \textit{Retrofit} \cite{retrofit} is used. Unfortunately the 
 in any common form, like \textit{JSON}. Therefore a custom parser was implemented to interpret the server response.
 
 \subsection{User interface}
+
+The implemented user interface is similar to the mockup shown in section \ref{sec:mockups}. Some feedback for the
+user is included, like displaying a \textit{Toast} when the user tries to save a medication with no name. The
+selection of a time of day is done by using a \textit{TimePicker} and multiple \textit{Checkbox} elements for the
+weekdays. Swiping an \texttt{AlertTimestamp} displays a \textit{Snackbar} with a option to undo the deletion.
+Swiping a \texttt{Medication} prompts an \textit{AlertDialog} with the option to confirm or cancel the deletion.
 
 %\section{Results}
 %
