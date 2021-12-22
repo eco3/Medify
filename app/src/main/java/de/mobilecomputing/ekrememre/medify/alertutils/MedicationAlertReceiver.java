@@ -37,7 +37,5 @@ public class MedicationAlertReceiver extends BroadcastReceiver {
         }
 
         notificationManager.notify(notificationID, notification);
-
-        //TODO: resort MainActivity RecyclerView, after dispatching a notification.
     }
 }
