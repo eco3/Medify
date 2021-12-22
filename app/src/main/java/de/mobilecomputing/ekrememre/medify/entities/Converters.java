@@ -1,7 +1,5 @@
 package de.mobilecomputing.ekrememre.medify.entities;
 
-import android.icu.util.Calendar;
-
 import androidx.room.TypeConverter;
 
 import com.google.gson.Gson;

@@ -3,7 +3,6 @@ package de.mobilecomputing.ekrememre.medify.fragments;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,8 +15,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
-
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
