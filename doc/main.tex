@@ -7,6 +7,7 @@
 \usepackage{enumitem}
 \usepackage{calc}
 \usepackage{float}
+\usepackage{wrapfig}
 \usepackage[colorlinks=true,urlcolor=blue,linkcolor=green]{hyperref}
 \usepackage{graphicx,svg}
 \svgsetup{inkscapelatex=false,inkscapepath=./build/svg-inkscape}
@@ -44,20 +45,27 @@ To simulate users for this application, two personas were created, which represe
 that might us this application.
 
 \subsubsection{First persona} \hfill
-\begin{figure}[h]
-	\centerline{\includegraphics[width=.5\linewidth]{images/persona01.jpg}}
-	\caption[Portrait of the persona Rosalyn Foster; Source taken from \cite{personaimg}.]
-	{\tabular[t]{@{}l@{}}Portrait of the persona Rosalyn Foster.\\ Source taken from \cite{personaimg}.\endtabular}
-	\label{fig:persona1}
-\end{figure}
 
-\begin{description}[labelwidth=\widthof{\bfseries Computer skills},leftmargin=.8cm,labelindent=.8cm]
-	\item[Name] Rosalyn Foster
-	\item[Age] 68
-	\item[Marital status] Married
-	\item[Occupation] Retiree
-	\item[Computer skills] poor
-\end{description}
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.4\linewidth}
+		\centerline{\includegraphics[width=\linewidth]{images/persona01.jpg}}
+		\caption[Portrait of the persona Rosalyn Foster; Source taken from \cite{personaimg}.]
+		{\tabular[t]{@{}l@{}}Portrait of the persona Rosalyn Foster.\\ Source taken from \cite{personaimg}.\endtabular}
+		\label{fig:persona1}
+	\end{minipage}
+	\hfill
+	\begin{minipage}{0.5\linewidth}
+		\vspace{-25pt}
+		\begin{description}
+			\item[Name] Rosalyn Foster
+			\item[Age] 68
+			\item[Marital status] Married
+			\item[Occupation] Retiree
+			\item[Computer skills] poor
+		\end{description}
+	\end{minipage}
+\end{figure}
 
 \paragraph*{Key characteristics}
 \begin{itemize}[leftmargin=1.25cm]
@@ -77,20 +85,27 @@ that might us this application.
 As an older person, Rosalyn wants to be reminded to take her medicine, because she forgets them and wants to get healthy.
 
 \subsubsection{Second persona} \hfill
-\begin{figure}[h]
-	\centerline{\includegraphics[width=.5\linewidth]{images/persona02.jpg}}
-	\caption[Portrait of the persona Christian Metz; Source taken from \cite{personaimg}.]
-	{\tabular[t]{@{}l@{}}Portrait of the persona Christian Metz.\\ Source taken from \cite{personaimg}.\endtabular}
-	\label{fig:persona2}
-\end{figure}
 
-\begin{description}[labelwidth=\widthof{\bfseries Computer skills},leftmargin=.8cm,labelindent=.8cm]
-	\item[Name] Christian Metz
-	\item[Age] 32
-	\item[Marital status] Engaged
-	\item[Occupation] Physiotherapist
-	\item[Computer skills] strong
-\end{description}
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.4\linewidth}
+		\centerline{\includegraphics[width=\linewidth]{images/persona02.jpg}}
+		\caption[Portrait of the persona Christian Metz; Source taken from \cite{personaimg}.]
+		{\tabular[t]{@{}l@{}}Portrait of the persona Christian Metz.\\ Source taken from \cite{personaimg}.\endtabular}
+		\label{fig:persona2}
+	\end{minipage}
+	\hfill
+	\begin{minipage}{0.5\linewidth}
+		\vspace{-25pt}
+		\begin{description}
+			\item[Name] Christian Metz
+			\item[Age] 32
+			\item[Marital status] Engaged
+			\item[Occupation] Physiotherapist
+			\item[Computer skills] strong
+		\end{description}
+	\end{minipage}
+\end{figure}
 
 \paragraph*{Key characteristics}
 \begin{itemize}[leftmargin=1.25cm]
