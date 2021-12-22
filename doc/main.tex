@@ -209,28 +209,93 @@ to activate the GTIN/EAN--label scanner. A new activity shall start to handle th
 In order to save the medication entry, a button is presented in the upper right top of the screen. To cancel the
 editing or adding operation, the system wide back-button in the navigation-buttons is to be used.
 
+\section{Design decisions}
 
+This section describes the design decision, which taken while developing the application.
 
-%\section{Design decisions}
-%
-%\subsection{UML diagram}
-%
-%\begin{figure}[H]
-%	\centerline{\includesvg[width=0.7\linewidth]{uml_diagram}}
-%	\caption{TODO}
-%	\label{fig:uml_diagram}
-%\end{figure}
-%
+\subsection{Database}
+
+In order to implement the \textit{CRUD} operations, the package \textit{Room} by \cite{room} was used.
+In an attempt to realize the data model in Fig. \ref{fig:entity_relationship_diagram}, the implemented model
+needed to be altered.
+
+\begin{figure}[H]
+	\centerline{\includesvg[width=\linewidth]{uml_diagram}}
+	\caption{UML diagram depicting the data model of the application.}
+	\label{fig:uml_diagram}
+\end{figure}
+
+Fig. \ref{fig:uml_diagram} is the resulting UML diagram of the implemented data model. To achieve a \texttt{1:n}
+relationship between the entities \texttt{Medication} and \texttt{AlertTimestamp} a helper class
+\texttt{MedicationWithAlertTimestamps} was introduced. This way \textit{Room} is able to fetch a medication entry
+and all its associated alerts. To abstract the data model structure from the controller and view, a
+\texttt{ViewModel} was implemented to manage the database operations, and to offer the view a \texttt{LiveData}
+representation of all medication entries.
+
+An attentive reader might wonder, why the implementation contains a \texttt{1:n} relationship, when a single
+\texttt{AlertTimestamp} class has also a list of \texttt{timestamps}. One might come to the conclusion, that a
+\texttt{1:1} relationship be sufficient. Or even just the \texttt{Medication} class with an list attribute called
+\texttt{timestamps}.
+
+The decision was taken to implement this model the way as in Fig. \ref{fig:uml_diagram}, because a single
+\texttt{AlertTimestamp} entry shall represent an alert at a specific time of the day, which can be repeated
+at every given weekday. This results the \texttt{timestamps} attribute list having up to seven entries and no
+more. In order to have multiple alerts on the same weekday, the \texttt{Medication} class can have multiple 
+\texttt{AlertTimestamp} entries.
+
+\subsection{Managing alerts}
+
+To manage alerts the class \textit{AlarmManager} \cite{alarmmanager} was leveraged. This class enables the
+application to run code at a specific time.
+
+Every time a new medication entry is added, the \textit{AlarmManager} shall schedule new alarms. When a
+medication is updated, the manager shall update the existing alarms, which are associated to the
+medication. Deleting a medication, shall cancel the associated alarms. In order to ensure consistency, these
+operations are included in the \texttt{ViewModel}. When the \texttt{ViewModel} is commissioned to alter the 
+database, it also guarantees, that the scheduled alarms are consistent to the current database.
+
+The specific time of the alert is provided as an Unix timestamp inside the \texttt{AlertTimestamp} class.
+The scheduled code is a notification, which provides the user the name and the medication description.
+Future revisions shall include a more attentive seeking alarm, like a ringtone which need to be canceled
+by the user.
+
+\subsection{Scanning GTIN/EAN--label}
+
+Scanning the labels on products requires the application to obtain permissions to the camera. By using the package
+\textit{code-scanner} \cite{barcode} the scanning is achieved. The scanning-process is started, by 
+starting an activity containing an intent with a result-request. The started activity uses the package
+\textit{code-scanner}. When a label is successfully registered, the activity sets the recognized GTIN/EAN--number
+as the result and finishes. The parent activity receives this number and can continue processing it.
+
+\subsection{API calls}
+
+Having a GTIN/EAN--number, the application can try to fetch information about the product from an online database.
+An open database is provided by \cite{eandatabase}. This host has a limited number of daily API calls and has a
+narrow spectrum of products registered. However it is sufficient to showcase the functionality. To manage the API
+calls, the package \textit{Retrofit} \cite{retrofit} is used. Unfortunately the responses from the database are not
+in any common form, like \textit{JSON}. Therefore a custom parser was implemented to interpret the server response.
+
+\subsection{User interface}
+
 %\section{Results}
 %
 %\section{Conclusion}
 
 \newpage\hfill\newpage %TODO
 \begin{thebibliography}{00}	
-	\bibitem{personaimg} P. Wang, ``This Person Does Not Exist,'' \textit{thispersondoesnotexist.com}, [Online] Available: \url{https://thispersondoesnotexist.com/} [Accessed Dec. 17, 2021].
+	\bibitem{personaimg} P. Wang, ``This Person Does Not Exist,'' \textit{thispersondoesnotexist.com}, [Online]. Available: \url{https://thispersondoesnotexist.com/} [Accessed Dec. 17, 2021].
 
-	\bibitem{storyboard} Clever Prototypes, LLC, ``Storyboard That,'' \textit{storyboardthat.com}, [Online] Available: \url{https://www.storyboardthat.com/} [Accessed Dec. 17, 2021].
+	\bibitem{storyboard} Clever Prototypes, LLC, ``Storyboard That,'' \textit{storyboardthat.com}, [Online]. Available: \url{https://www.storyboardthat.com/}. [Accessed Dec. 17, 2021].
+	
+	\bibitem{room} Google, LLC, ``Room - Android Developers,'' \textit{android.com}, [Online] Available: \url{https://developer.android.com/jetpack/androidx/releases/room/}. [Accessed Dec. 22, 2021].
+		
+	\bibitem{alarmmanager} Google, LLC, ``AlarmManager - Android Developers,'' \textit{android.com}, [Online]. Available: \url{https://developer.android.com/reference/android/app/AlarmManager}. [Accessed Dec. 22, 2021].
 
+	\bibitem{barcode} Y. Budiyev, ``yuriy-budiyev/code-scanner: Code scanner library for Android, based on ZXing,'' \textit{github.com/yuriy-budiyev/code-scanner/}, [Online]. Available: \url{https://github.com/yuriy-budiyev/code-scanner/}. [Accessed Dec. 22, 2021].
+
+	\bibitem{eandatabase} ``Open EAN Database - Datenbank und Produktbewertung,'' \textit{opengtindb.org}, [Online]. Available: \url{https://opengtindb.org/}. [Accessed Dec. 22, 2021].
+	
+	\bibitem{retrofit} Square, Inc., ``Retrofit,'' \textit{square.github.io/retrofit/}, [Online]. Available: \url{https://square.github.io/retrofit/}. [Accessed Dec. 22, 2021].
 \end{thebibliography}
 
 \end{document}
