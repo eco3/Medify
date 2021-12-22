@@ -142,7 +142,7 @@ routine forgets to take her medicine.
 Fig. \ref{fig:storyboard2} shows the same elderly person in a similar scenario. In order to manage
 her medication, she uses her smartphone to get reminded when to take her medicine.
 
-\subsection{Requirement specification}
+\subsection{Requirement specification} \label{sec:requirement_specification}
 The requirement analysis shows, that the application must be capable of reminding the user when to take
 their medicine. The time of notification shall be set by the user. In order to accommodate users who need
 to take different medications at different points in time, the application shall be able to record multiple
@@ -254,8 +254,6 @@ database, it also guarantees, that the scheduled alarms are consistent to the cu
 
 The specific time of the alert is provided as an Unix timestamp inside the \texttt{AlertTimestamp} class.
 The scheduled code is a notification, which provides the user the name and the medication description.
-Future revisions shall include a more attentive seeking alarm, like a ringtone which need to be canceled
-by the user.
 
 \subsection{Scanning GTIN/EAN--label}
 
@@ -346,11 +344,27 @@ description.
 
 \subsection{Testing}
 
+Testing was done manually. The consistency of the database was tested, by applying all the \textit{CRUD} operations
+and verifying the results. The same was done with the scheduled alarms of the \textit{AlarmManager}. The reliability
+of the \textit{AlarmManager} was tested by scheduling alerts at 12 o'clock on all weekdays on a physical device.
+
+The handling of the required camera permission was also tested, if the application acts in a predictable way, when
+the permission is not granted.
+
 \subsection{Degree of completion}
+
+The requirements set in section \ref{sec:requirement_specification} were fulfilled completely. The developed 
+application is able to record multiple medications with alerts, which points in time are chosen freely by the user.
+The user gets alerted, whenever a scheduled alert is triggered, by a notification. Furthermore a GTIN/EAN--label
+scanner and an autonomous product name lookup is implemented.
 
 \section{Conclusion}
 
-\newpage\hfill\newpage %TODO
+\lipsum[15] %TODO
+% Future revisions shall include a more attentive seeking alarm, like a ringtone which need to be canceled by the user.
+
+
+\newpage %\newpage\hfill\newpage %TODO
 \begin{thebibliography}{00}	
 	\bibitem{personaimg} P. Wang, ``This Person Does Not Exist,'' \textit{thispersondoesnotexist.com}, [Online]. Available: \url{https://thispersondoesnotexist.com/} [Accessed Dec. 17, 2021].
 
