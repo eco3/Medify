@@ -9,6 +9,7 @@
 \usepackage{float}
 \usepackage{wrapfig}
 \usepackage[colorlinks=true,urlcolor=blue,linkcolor=green]{hyperref}
+\def\UrlBreaks{\do\/\do-}
 \usepackage{graphicx,svg}
 \svgsetup{inkscapelatex=false,inkscapepath=./build/svg-inkscape}
 \usepackage{lipsum} %TODO
@@ -23,6 +24,7 @@
 
 \begin{abstract}
 \lipsum[1][1-4] %TODO
+\cite{medify}
 \end{abstract}
 
 \section{Introduction}
@@ -37,7 +39,7 @@ the needed attributes of the application are worked out.
 
 \subsection{Personas}
 To simulate users for this application, two personas were created, which represents the user types
-that might us this application.
+that might use this application.
 
 \subsubsection{First persona} \hfill
 \begin{figure}[H]
@@ -368,7 +370,11 @@ scanner and an autonomous product name lookup is implemented.
 
 \newpage %\newpage\hfill\newpage %TODO
 \begin{thebibliography}{00}	
-	\bibitem{Medify} E. Emre, ``eco3/Medify: A medication reminder App for Android,'' \textit{github.com/eco3/Medify/}, [Online]. Available: \url{https://github.com/eco3/Medify/}. [Accessed Dec. 23, 2021].
+	\bibitem{medify} E. Emre, ``eco3/Medify: A medication reminder App for Android,'' \textit{github.com/eco3/Medify/}, [Online]. Available: \url{https://github.com/eco3/Medify/}. [Accessed Dec. 23, 2021].
+	
+	\bibitem{polymedikation} ABDA - Bundesvereinigung Deutscher Apothekerverbände, e.V., ``Polymedikation - Bevölkerungsanteil in Deutschland nach Anzahl eingenommener Medikamente 2019 - Statista,'' \textit{statista.com}, June 2020. [Online]. Available: \url{https://statista.com/statistik/daten/studie/561628/umfrage/bevoelkerungsanteil-in-deutschland-nach-anzahl-eingenommener-medikamente/}. [Accessed Dec. 23, 2021]. 
+	
+	\bibitem{erinnerung_app} gfs.bern, AG, ``Schweiz - Nutzung Apps Erinnerung Medikamenteneinnahme 2021 - Statista,'' \textit{statista.com}, March 2021. [Online]. Available: \url{https://statista.com/statistik/daten/studie/527313/umfrage/umfrage-in-der-schweiz-zur-nutzung-von-erinnerungs-apps-fuer-medikamente/}. [Accessed Dec. 23, 2021]. 
 	
 	\bibitem{personaimg} P. Wang, ``This Person Does Not Exist,'' \textit{thispersondoesnotexist.com}, [Online]. Available: \url{https://thispersondoesnotexist.com/} [Accessed Dec. 17, 2021].
 
