@@ -35,15 +35,14 @@
 \lipsum[3][1-13] %TODO
 
 \section{Requirement analysis}
-
-\lipsum[5][1-4] %TODO
+First step of designing the application is a requirement analysis. By drafting personas and creating storyboards
+the needed attributes of the application are worked out.
 
 \subsection{Personas}
 To simulate users for this application, two personas were created, which represents the user types
 that might us this application.
 
 \subsubsection{First persona} \hfill
-
 \begin{figure}[H]
 	\centering
 	\begin{minipage}{0.4\linewidth}
@@ -83,7 +82,6 @@ that might us this application.
 As an older person, Rosalyn wants to be reminded to take her medicine, because she forgets them and wants to get healthy.
 
 \subsubsection{Second persona} \hfill
-
 \begin{figure}[H]
 	\centering
 	\begin{minipage}{0.4\linewidth}
@@ -120,7 +118,8 @@ As an older person, Rosalyn wants to be reminded to take her medicine, because s
 \end{itemize}
 
 \paragraph*{User story}
-As a healthy person, Christian wants to be reminded to take his vitamins, because he's busy all day and not thinking of it and wants to stay healthy.
+As a healthy person, Christian wants to be reminded to take his vitamins, because he's busy all day and
+not thinking of it and wants to stay healthy.
 
 \subsubsection{Summary}
 These personas show a user group, which are in need to take medication. However they struggle to 
@@ -143,7 +142,8 @@ remind themselves to take them in their daily lives.
 	\caption
 	{Storyboard showing an elderly person on her daily activities while using a medication reminder application.
 		In the first panel she sets an alert on her smartphone, using the medication reminder app, at one o'clock.
-		The second panel shows her and a friend enjoying their day. The medication reminder app alerts her at the set time, to take her medication.
+		The second panel shows her and a friend enjoying their day. The medication reminder app alerts her at the
+		set time, to take her medication.
 		In the last panel she picks up her phone and takes her medication, just as advised by the application.
 		Graphic created using \cite{storyboard}.}
 	\label{fig:storyboard2}
@@ -165,11 +165,11 @@ In order to facilitate the usage of the application, it shall include a way to s
 autonomously recognize the name of the scanned medication.
 
 \section{Conceptual model of the solution}
-
-\lipsum[2][1-5] %TODO
+For the development of the application, first a conceptual model was designed. The data model was conceived
+using an entity relationship diagram. The control flow was resulted designing an activity diagram. In order
+to construct the graphical user interface mockups were sketched by hand.
 
 \subsection{Entity relationship diagram}
-
 \begin{figure}[H]
 	\centerline{\includesvg[width=\linewidth]{images/entity_relationship_diagram}}
 	\caption{Entity relationship diagram to depict the data model.}
@@ -179,10 +179,10 @@ autonomously recognize the name of the scanned medication.
 Fig. \ref{fig:entity_relationship_diagram} shows a entity relationship diagram of the application.
 Two entities emerged when designing a first solution. \texttt{Medication} has the attributes \texttt{name},
 \texttt{description} and a \texttt{1:n} relationship to \texttt{AlertTimestamp}, which has \texttt{timestamps}.
-By designing the data model this way, it is possible to have multiple \texttt{Medication}-entries associated with multiple different \texttt{AlertTimestamp}-entries.
+By designing the data model this way, it is possible to have multiple \texttt{Medication}-entries associated
+with multiple different \texttt{AlertTimestamp}-entries.
 
 \subsection{Activity diagram}
-
 \begin{figure}[H]
 	\centerline{\includesvg[width=\linewidth]{images/activity_diagram}}
 	\caption{Activity diagram showing the main workflow of the application.}
@@ -194,7 +194,6 @@ to the database, actions for scheduling reminders and fetching data from a remot
 to keep this diagram plain, the scheduling and \textit{API} actions are deliberately kept simple.
 
 \subsection{Mockups} \label{sec:mockups}
-
 \begin{figure}[H]
 	\centerline{\includegraphics[width=0.4\linewidth]{images/mockup01}}
 	\caption{Mockup of the main activity. Red annotations shall clarify the functionality of the elements.}
@@ -223,11 +222,9 @@ In order to save the medication entry, a button is presented in the upper right 
 editing or adding operation, the system wide back-button in the navigation-buttons is to be used.
 
 \section{Design decisions}
-
 This section describes the design decision, which taken while developing the application.
 
 \subsection{Database}
-
 In order to implement the \textit{CRUD} operations, the package \textit{Room} by \cite{room} was used.
 In an attempt to realize the data model in Fig. \ref{fig:entity_relationship_diagram}, the implemented model
 needed to be altered.
@@ -257,7 +254,6 @@ more. In order to have multiple alerts on the same weekday, the \texttt{Medicati
 \texttt{AlertTimestamp} entries.
 
 \subsection{Managing alerts}
-
 To manage alerts the class \textit{AlarmManager} \cite{alarmmanager} was leveraged. This class enables the
 application to run code at a specific time.
 
@@ -273,7 +269,6 @@ The scheduled code is a notification, which provides the user the name and the m
 %TODO talk about repetition.
 
 \subsection{Scanning GTIN/EAN--label}
-
 Scanning the labels on products requires the application to obtain permissions to the camera. By using the package
 \textit{code-scanner} \cite{barcode} the scanning is achieved. The scanning-process is started, by 
 starting an activity containing an intent with a result-request. The started activity uses the package
@@ -281,7 +276,6 @@ starting an activity containing an intent with a result-request. The started act
 as the result and finishes. The parent activity receives this number and can continue processing it.
 
 \subsection{API calls}
-
 Having a GTIN/EAN--number, the application can try to fetch information about the product from an online database.
 An open database is provided by \cite{eandatabase}. This host has a limited number of daily API calls and has a
 narrow spectrum of products registered. However it is sufficient to showcase the functionality. To manage the API
@@ -289,7 +283,6 @@ calls, the package \textit{Retrofit} \cite{retrofit} is used. Unfortunately the 
 in any common form, like \textit{JSON}. Therefore a custom parser was implemented to interpret the server response.
 
 \subsection{User interface}
-
 The implemented user interface is similar to the mockup shown in section \ref{sec:mockups}. Some feedback for the
 user is included, like displaying a \textit{Toast} when the user tries to save a medication with no name. The
 selection of a time of day is done by using a \textit{TimePicker} and multiple \textit{Checkbox} elements for the
@@ -297,12 +290,10 @@ weekdays. Swiping an \texttt{AlertTimestamp} displays a \textit{Snackbar} with a
 Swiping a \texttt{Medication} prompts an \textit{AlertDialog} with the option to confirm or cancel the deletion.
 
 \section{Results}
-
 This chapter shows the results of the implemented application, elaborates on the testing procedure and discusses
 the completion of the requirements.
 
 \subsection{Showcase}
-
 To showcase the application, some distinct screenshot were taken described here.
 
 \begin{figure}[H]
@@ -360,7 +351,6 @@ The medication name is shown in the title of the notification, while the intake 
 description.
 
 \subsection{Testing}
-
 Testing was done manually. The consistency of the database was tested, by applying all the \textit{CRUD} operations
 and verifying the results. The same was done with the scheduled alarms of the \textit{AlarmManager}. The reliability
 of the \textit{AlarmManager} was tested by scheduling alerts at 12 o'clock on all weekdays on a physical device.
@@ -369,20 +359,20 @@ The handling of the required camera permission was also tested, if the applicati
 the permission is not granted.
 
 \subsection{Degree of completion}
-
 The requirements set in section \ref{sec:requirement_specification} were fulfilled completely. The developed 
 application is able to record multiple medications with alerts, which points in time are chosen freely by the user.
 The user gets alerted, whenever a scheduled alert is triggered, by a notification. Furthermore a GTIN/EAN--label
 scanner and an autonomous product name lookup is implemented.
 
 \section{Conclusion}
-
 \lipsum[15] %TODO
 % Future revisions shall include a more attentive seeking alarm, like a ringtone which need to be canceled by the user.
 
 
 \newpage %\newpage\hfill\newpage %TODO
 \begin{thebibliography}{00}	
+	\bibitem{Medify} E. Emre, ``eco3/Medify: A medication reminder App for Android,'' \textit{github.com/eco3/Medify/}, [Online]. Available: \url{https://github.com/eco3/Medify/}. [Accessed Dec. 23, 2021].
+	
 	\bibitem{personaimg} P. Wang, ``This Person Does Not Exist,'' \textit{thispersondoesnotexist.com}, [Online]. Available: \url{https://thispersondoesnotexist.com/} [Accessed Dec. 17, 2021].
 
 	\bibitem{storyboard} Clever Prototypes, LLC, ``Storyboard That,'' \textit{storyboardthat.com}, [Online]. Available: \url{https://www.storyboardthat.com/}. [Accessed Dec. 17, 2021].
