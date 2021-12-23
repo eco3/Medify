@@ -18,13 +18,9 @@
     
 \begin{document}
 
-\title{Medify -- A medication reminder Android App}
+\title{Medify -- A medication reminder App for Android}
 
-\author{\IEEEauthorblockN{Ekrem Emre}
-\IEEEauthorblockA{\textit{HTWG Konstanz -- University of Applied Sciences, Germany} \\
-\textit{Matriculation number: 302110} \\
-ek741emr@htwg-konstanz.de}
-}
+\author{\IEEEauthorblockN{Ekrem Emre}\IEEEauthorblockA{\textit{HTWG Konstanz -- University of Applied Sciences, Germany} \\ \textit{Matriculation number: 302110} \\ ek741emr@htwg-konstanz.de}}
 
 \maketitle
 
@@ -39,6 +35,8 @@ ek741emr@htwg-konstanz.de}
 \lipsum[3][1-13] %TODO
 
 \section{Requirement analysis}
+
+\lipsum[5][1-4] %TODO
 
 \subsection{Personas}
 To simulate users for this application, two personas were created, which represents the user types
@@ -57,7 +55,7 @@ that might us this application.
 	\hfill
 	\begin{minipage}{0.5\linewidth}
 		\vspace{-25pt}
-		\begin{description}
+		\begin{description}[labelindent=-0.3cm]
 			\item[Name] Rosalyn Foster
 			\item[Age] 68
 			\item[Marital status] Married
@@ -97,7 +95,7 @@ As an older person, Rosalyn wants to be reminded to take her medicine, because s
 	\hfill
 	\begin{minipage}{0.5\linewidth}
 		\vspace{-25pt}
-		\begin{description}
+		\begin{description}[labelindent=-0.3cm]
 			\item[Name] Christian Metz
 			\item[Age] 32
 			\item[Marital status] Engaged
@@ -167,6 +165,8 @@ In order to facilitate the usage of the application, it shall include a way to s
 autonomously recognize the name of the scanned medication.
 
 \section{Conceptual model of the solution}
+
+\lipsum[2][1-5] %TODO
 
 \subsection{Entity relationship diagram}
 
@@ -269,6 +269,8 @@ database, it also guarantees, that the scheduled alarms are consistent to the cu
 
 The specific time of the alert is provided as an Unix timestamp inside the \texttt{AlertTimestamp} class.
 The scheduled code is a notification, which provides the user the name and the medication description.
+
+%TODO talk about repetition.
 
 \subsection{Scanning GTIN/EAN--label}
 
