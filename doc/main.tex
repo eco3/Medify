@@ -12,7 +12,6 @@
 \def\UrlBreaks{\do\/\do-}
 \usepackage{graphicx,svg}
 \svgsetup{inkscapelatex=false,inkscapepath=./build/svg-inkscape}
-\usepackage{lipsum} %TODO
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
@@ -39,11 +38,13 @@ while 8\% of the asked population already uses such an app, 50\% are open for su
 This project aims to design and develop an application for the Android system. It should help the user to
 keep up with their regular medication intake.
 First a requirement analysis should provide a in depth view over the necessary components. 
-The following step deals with the conceptualizing a first model of the solution, in order to map out the development. After unfolding design decisions, results are discussed. Finally the 
+The following step deals with the conceptualizing a first model of the solution, in order to map out
+the development. After unfolding design decisions, results are discussed. Finally the 
 conclusion of the project is reviewed.
 
 \section{Requirement analysis}
-First step of designing the application is a requirement analysis. By drafting personas and creating storyboards the needed attributes of the application are worked out.
+First step of designing the application is a requirement analysis. By drafting personas and creating
+storyboards the needed attributes of the application are worked out.
 
 \subsection{Personas}
 To simulate users for this application, two personas were created, which represents the user types
@@ -86,7 +87,8 @@ that might use this application.
 \end{itemize}
 
 \paragraph*{User story}
-As an older person, Rosalyn wants to be reminded to take her medicine, because she forgets them and wants to get healthy.
+As an older person, Rosalyn wants to be reminded to take her medicine, because she forgets them
+and wants to get healthy.
 
 \subsubsection{Second persona} \hfill
 \begin{figure}[H]
@@ -270,10 +272,9 @@ medication. Deleting a medication, shall cancel the associated alarms. In order 
 operations are included in the \texttt{ViewModel}. When the \texttt{ViewModel} is commissioned to alter the 
 database, it also guarantees, that the scheduled alarms are consistent to the current database.
 
-The specific time of the alert is provided as an Unix timestamp inside the \texttt{AlertTimestamp} class.
+The specific time of the alert is provided as an Unix timestamp stored in the \texttt{AlertTimestamp} class.
 The scheduled code is a notification, which provides the user the name and the medication description.
-
-%TODO talk about repetition.
+Every alert which is added to the \textit{AlarmManager}, gets repeated in a weekly cycle.
 
 \subsection{Scanning GTIN/EAN--label}
 Scanning the labels on products requires the application to obtain permissions to the camera. By using the package
@@ -372,11 +373,21 @@ The user gets alerted, whenever a scheduled alert is triggered, by a notificatio
 scanner and an autonomous product name lookup is implemented.
 
 \section{Conclusion}
-\lipsum[15-16] %TODO
-% Future revisions shall include a more attentive seeking alarm, like a ringtone which need to be canceled by the user.
+This section concludes the documentation and discusses possible feature ideas of the application.
 
+As explained, all requirements were fulfilled completely in course of the development of Medify. However, there are
+still some features users would benefit from. Currently if an alert for a medication goes off, only a notification
+gets dispatched. Future revisions could include a more attentive seeking alarm, like a ringtone which needs to be
+canceled by the user. Another functionality might include, that the user is able to optionally add a self shot
+image of the drug to the medication record. This way if an alarm gets triggered, the image will be displayed
+on the screen, for the user to identify it faster and they don't have to struggle, if they depend on multiple
+medications. Adding alerts could be more fine-grained. Options like ``Remind every $n$ weeks.'' or even disabling
+currently unused medications could be useful. Backups and restores of the database when users change devices, would
+increase portability.
 
-%\newpage %\newpage\hfill\newpage %TODO
+In summary this project has been successfully implemented, using the principles of requirement engineering and 
+building a concept model of the solution, before implementing it.
+
 \begin{thebibliography}{00}	
 	\bibitem{medify} E. Emre, ``eco3/Medify: A medication reminder App for Android,'' \textit{github.com/eco3/Medify/}, [Online]. Available: \url{https://github.com/eco3/Medify/}. [Accessed Dec. 23, 2021].
 	
